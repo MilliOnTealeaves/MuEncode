@@ -17,7 +17,7 @@ public partial class Main : Form
 
     private void pictureBox1_Click(object sender, EventArgs e)
     {
-
+        label_Message.Text = "Easter Egg! ()";
     }
 
     private void label1_Click(object sender, EventArgs e)
@@ -87,14 +87,19 @@ public partial class Main : Form
 
     private void checkBox1_CheckedChanged(object sender, EventArgs e)
     {
-		if (checkBox_Clip.Checked)
+		if (checkBox_Clip.Checked && string.IsNullOrWhiteSpace(textbox_Output.Text)==false)
 		{
-			Clipboard.SetText(textbox_Output.Text);
+            Clipboard.SetText(textbox_Output.Text);
 		}
 	}
 
     private void button_ClearClick(object sender, EventArgs e)
     {
         textbox_Output.Text = "";
+    }
+
+    private void label_Prompt_Click(object sender, EventArgs e)
+    {
+
     }
 }

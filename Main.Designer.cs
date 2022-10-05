@@ -48,9 +48,9 @@
 			// 
 			this.radio_Encode.AutoSize = true;
 			this.radio_Encode.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-			this.radio_Encode.Location = new System.Drawing.Point(143, 189);
+			this.radio_Encode.Location = new System.Drawing.Point(146, 196);
 			this.radio_Encode.Name = "radio_Encode";
-			this.radio_Encode.Size = new System.Drawing.Size(74, 23);
+			this.radio_Encode.Size = new System.Drawing.Size(63, 17);
 			this.radio_Encode.TabIndex = 1;
 			this.radio_Encode.TabStop = true;
 			this.radio_Encode.Text = "Encode";
@@ -75,7 +75,7 @@
 			this.label_Title.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(188)))), ((int)(((byte)(237)))), ((int)(((byte)(162)))));
 			this.label_Title.Location = new System.Drawing.Point(136, 10);
 			this.label_Title.Name = "label_Title";
-			this.label_Title.Size = new System.Drawing.Size(255, 36);
+			this.label_Title.Size = new System.Drawing.Size(206, 29);
 			this.label_Title.TabIndex = 5;
 			this.label_Title.Text = "Welcome to μEncode!";
 			this.label_Title.Click += new System.EventHandler(this.label1_Click);
@@ -87,7 +87,7 @@
 			this.button_Run.FlatAppearance.BorderSize = 0;
 			this.button_Run.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
 			this.button_Run.ForeColor = System.Drawing.Color.White;
-			this.button_Run.Location = new System.Drawing.Point(305, 182);
+			this.button_Run.Location = new System.Drawing.Point(305, 186);
 			this.button_Run.Name = "button_Run";
 			this.button_Run.Size = new System.Drawing.Size(86, 35);
 			this.button_Run.TabIndex = 4;
@@ -99,9 +99,9 @@
 			// 
 			this.radio_Decode.AutoSize = true;
 			this.radio_Decode.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-			this.radio_Decode.Location = new System.Drawing.Point(223, 189);
+			this.radio_Decode.Location = new System.Drawing.Point(226, 196);
 			this.radio_Decode.Name = "radio_Decode";
-			this.radio_Decode.Size = new System.Drawing.Size(76, 23);
+			this.radio_Decode.Size = new System.Drawing.Size(64, 17);
 			this.radio_Decode.TabIndex = 2;
 			this.radio_Decode.TabStop = true;
 			this.radio_Decode.Text = "Decode";
@@ -124,11 +124,12 @@
 			// 
 			// label_Prompt
 			// 
+			this.label_Prompt.AutoEllipsis = true;
 			this.label_Prompt.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.label_Prompt.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(188)))), ((int)(((byte)(237)))), ((int)(((byte)(162)))));
 			this.label_Prompt.Location = new System.Drawing.Point(140, 57);
 			this.label_Prompt.Name = "label_Prompt";
-			this.label_Prompt.Size = new System.Drawing.Size(110, 20);
+			this.label_Prompt.Size = new System.Drawing.Size(150, 20);
 			this.label_Prompt.TabIndex = 6;
 			this.label_Prompt.Text = "Enter Message:";
 			// 
@@ -152,7 +153,7 @@
 			this.label_Output.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(188)))), ((int)(((byte)(237)))), ((int)(((byte)(162)))));
 			this.label_Output.Location = new System.Drawing.Point(12, 223);
 			this.label_Output.Name = "label_Output";
-			this.label_Output.Size = new System.Drawing.Size(68, 20);
+			this.label_Output.Size = new System.Drawing.Size(100, 20);
 			this.label_Output.TabIndex = 7;
 			this.label_Output.Text = "Output:";
 			// 
@@ -183,9 +184,9 @@
 			this.button_Clear.FlatAppearance.BorderSize = 0;
 			this.button_Clear.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
 			this.button_Clear.ForeColor = System.Drawing.Color.White;
-			this.button_Clear.Location = new System.Drawing.Point(280, 327);
+			this.button_Clear.Location = new System.Drawing.Point(255, 327);
 			this.button_Clear.Name = "button_Clear";
-			this.button_Clear.Size = new System.Drawing.Size(111, 35);
+			this.button_Clear.Size = new System.Drawing.Size(136, 35);
 			this.button_Clear.TabIndex = 6;
 			this.button_Clear.Text = "Clear Output";
 			this.button_Clear.UseVisualStyleBackColor = false;
@@ -193,7 +194,7 @@
 			// 
 			// Main
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
 			this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(16)))), ((int)(((byte)(16)))));
 			this.ClientSize = new System.Drawing.Size(405, 377);
