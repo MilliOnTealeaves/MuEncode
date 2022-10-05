@@ -79,31 +79,40 @@ class Encoder
 		}
 	}	
 
-	public static string ToMorse(string encIn)
+	public static string ToMorse(string encIn, out bool error)
 	{
+		error = false;
 		encIn = encIn.ToLower();
 		string encOut = "";
 		for (int i = 0; i < encIn.Length; i++)
 		{
-			encOut += MorseF[encIn[i]] + " ";
+			try {
+				encOut += MorseF[encIn[i]] + " ";
+			}
+			catch (KeyNotFoundException) {
+				encOut += encIn[i] + " ";
+				error = true;
+			}
 		}
 		return encOut;
 	}
-	public static string FromMorse(string encIn)
+	public static string FromMorse(string encIn, out bool error)
 	{
+		error = false;
 		encIn = encIn.ToLower();
 		encIn = encIn.Trim() + " ";
 		string encOut = "";
 		while (encIn.Length > 1)
 		{
-			try
-			{
-				string thisChar = encIn.Substring(0, encIn.IndexOf(' '));
+			string thisChar = encIn.Substring(0, encIn.IndexOf(' '));
+			try {
 				encOut += MorseT[thisChar];
-				encIn = encIn.Remove(0, encIn.IndexOf(' ')+1);
 			}
-			catch {break;}
-				
+			catch (KeyNotFoundException) {
+				encOut += thisChar +" ";
+				error = true;
+			}
+			encIn = encIn.Remove(0, encIn.IndexOf(' ')+1);		
 		}
 		return encOut;
 	}

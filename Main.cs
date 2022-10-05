@@ -14,6 +14,7 @@ namespace EncodeDecode
             label_Message.Text = "";
             radio_Encode.Checked = true;
 			Encoder.LoadMorse();
+            textbox_Input.PlaceholderText = "Input message to be encoded to morse";
 		}
 
         private void pictureBox1_Click(object sender, EventArgs e)
@@ -33,13 +34,15 @@ namespace EncodeDecode
 
         private void EncodeCheckedChanged(object sender, EventArgs e)
         {
-
-        }
+            if (radio_Encode.Checked)
+				textbox_Input.PlaceholderText = "Type message to be encoded to morse";
+		}
 
         private void DecodeCheckedChanged(object sender, EventArgs e)
         {
-
-        }
+            if (radio_Decode.Checked)
+				textbox_Input.PlaceholderText = "Type morse code to be translated";
+		}
 
         private void InputTextChanged(object sender, EventArgs e)
         {
@@ -48,17 +51,31 @@ namespace EncodeDecode
 
         private void RunClicked(object sender, EventArgs e)
         {
+			bool error;
+			if (string.IsNullOrEmpty(textbox_Input.Text))
+            {
+                label_Message.Text = "Input is empty, please try again";
+                return;
+            }
 			//if encode is checked
 			if (radio_Encode.Checked)
 			{
-                label_Message.Text = "* Input has been encoded";
-                textbox_Output.Text = Encoder.ToMorse(textbox_Input.Text);
-            }
+                label_Message.Text = "";
+                textbox_Output.Text = Encoder.ToMorse(textbox_Input.Text, out error);
+				if (error)
+				{
+					label_Message.Text = "Encountered invalid character";
+				}
+			}
             //if decode is checked
             else if (radio_Decode.Checked)
 			{
-                label_Message.Text = "* Input has been decoded";
-                textbox_Output.Text = Encoder.FromMorse(textbox_Input.Text);
+				label_Message.Text = "";
+				textbox_Output.Text = Encoder.FromMorse(textbox_Input.Text, out error);
+                if (error)
+                {
+                    label_Message.Text = "Encountered invalid character(s)";
+                }
             }
         }
 
