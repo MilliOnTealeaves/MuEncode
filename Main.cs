@@ -1,3 +1,4 @@
+using System.Windows.Forms;
 namespace EncodeDecode;
 public partial class Main : Form
 {
@@ -70,6 +71,10 @@ public partial class Main : Form
             if (error)
                 label_Message.Text = "Encountered invalid character(s)";
         }
+        if (checkBox_Clip.Checked)
+        {
+			Clipboard.SetText(textbox_Output.Text);
+		}
     }
 
     private void label1_Click_1(object sender, EventArgs e)
@@ -80,5 +85,18 @@ public partial class Main : Form
     private void label3_Click(object sender, EventArgs e)
     {
 
+    }
+
+    private void checkBox1_CheckedChanged(object sender, EventArgs e)
+    {
+		if (checkBox_Clip.Checked)
+		{
+			Clipboard.SetText(textbox_Output.Text);
+		}
+	}
+
+    private void button_ClearClick(object sender, EventArgs e)
+    {
+        textbox_Output.Text = "";
     }
 }

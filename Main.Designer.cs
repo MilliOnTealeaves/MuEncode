@@ -39,6 +39,8 @@
 			this.textbox_Output = new System.Windows.Forms.TextBox();
 			this.label_Output = new System.Windows.Forms.Label();
 			this.label_Message = new System.Windows.Forms.Label();
+			this.checkBox_Clip = new System.Windows.Forms.CheckBox();
+			this.button_Clear = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -87,7 +89,7 @@
 			this.button_Run.Location = new System.Drawing.Point(305, 186);
 			this.button_Run.Name = "button_Run";
 			this.button_Run.Size = new System.Drawing.Size(75, 35);
-			this.button_Run.TabIndex = 3;
+			this.button_Run.TabIndex = 4;
 			this.button_Run.Text = "RUN";
 			this.button_Run.UseVisualStyleBackColor = false;
 			this.button_Run.Click += new System.EventHandler(this.RunClicked);
@@ -135,18 +137,18 @@
 			this.textbox_Output.Cursor = System.Windows.Forms.Cursors.IBeam;
 			this.textbox_Output.Font = new System.Drawing.Font("NK57 Monospace Sc Bk", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.textbox_Output.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-			this.textbox_Output.Location = new System.Drawing.Point(10, 240);
+			this.textbox_Output.Location = new System.Drawing.Point(10, 243);
 			this.textbox_Output.Multiline = true;
 			this.textbox_Output.Name = "textbox_Output";
 			this.textbox_Output.ReadOnly = true;
 			this.textbox_Output.Size = new System.Drawing.Size(370, 80);
-			this.textbox_Output.TabIndex = 4;
+			this.textbox_Output.TabIndex = 5;
 			// 
 			// label_Output
 			// 
 			this.label_Output.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.label_Output.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(188)))), ((int)(((byte)(237)))), ((int)(((byte)(162)))));
-			this.label_Output.Location = new System.Drawing.Point(10, 220);
+			this.label_Output.Location = new System.Drawing.Point(10, 223);
 			this.label_Output.Name = "label_Output";
 			this.label_Output.Size = new System.Drawing.Size(60, 20);
 			this.label_Output.TabIndex = 7;
@@ -161,12 +163,40 @@
 			this.label_Message.Size = new System.Drawing.Size(240, 20);
 			this.label_Message.TabIndex = 11;
 			// 
+			// checkBox_Clip
+			// 
+			this.checkBox_Clip.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.checkBox_Clip.Location = new System.Drawing.Point(10, 335);
+			this.checkBox_Clip.Name = "checkBox_Clip";
+			this.checkBox_Clip.Size = new System.Drawing.Size(256, 20);
+			this.checkBox_Clip.TabIndex = 3;
+			this.checkBox_Clip.Text = "Copy Output to Clipboard Upon Completion";
+			this.checkBox_Clip.UseVisualStyleBackColor = true;
+			this.checkBox_Clip.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+			// 
+			// button_Clear
+			// 
+			this.button_Clear.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(16)))), ((int)(((byte)(16)))));
+			this.button_Clear.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.button_Clear.FlatAppearance.BorderSize = 0;
+			this.button_Clear.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+			this.button_Clear.ForeColor = System.Drawing.Color.White;
+			this.button_Clear.Location = new System.Drawing.Point(280, 328);
+			this.button_Clear.Name = "button_Clear";
+			this.button_Clear.Size = new System.Drawing.Size(100, 30);
+			this.button_Clear.TabIndex = 6;
+			this.button_Clear.Text = "Clear Output";
+			this.button_Clear.UseVisualStyleBackColor = false;
+			this.button_Clear.Click += new System.EventHandler(this.button_ClearClick);
+			// 
 			// Main
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
 			this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(16)))), ((int)(((byte)(16)))));
-			this.ClientSize = new System.Drawing.Size(390, 331);
+			this.ClientSize = new System.Drawing.Size(389, 366);
+			this.Controls.Add(this.button_Clear);
+			this.Controls.Add(this.checkBox_Clip);
 			this.Controls.Add(this.label_Message);
 			this.Controls.Add(this.label_Output);
 			this.Controls.Add(this.textbox_Output);
@@ -202,5 +232,7 @@
 		private Label label_Output;
 		private Label label_Message;
 		private RadioButton radio_Encode;
+		private CheckBox checkBox_Clip;
+		private Button button_Clear;
 	}
 }
