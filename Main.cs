@@ -12,7 +12,7 @@ public partial class Main : Form
         label_Message.Text = "";
         radio_Encode.Checked = true;
         Encoder.LoadMorse();
-        textbox_Input.PlaceholderText = "Input message to be encoded to morse";
+        textbox_Input.PlaceholderText = "Input message to be encoded";
     }
 
     private void pictureBox1_Click(object sender, EventArgs e)
@@ -33,13 +33,13 @@ public partial class Main : Form
     private void EncodeCheckedChanged(object sender, EventArgs e)
     {
         if (radio_Encode.Checked)
-            textbox_Input.PlaceholderText = "Type message to be encoded to morse";
+            textbox_Input.PlaceholderText = "Type message to be encoded";
     }
 
     private void DecodeCheckedChanged(object sender, EventArgs e)
     {
         if (radio_Decode.Checked)
-            textbox_Input.PlaceholderText = "Type morse code to be translated";
+            textbox_Input.PlaceholderText = "Type morse code to decode";
     }
 
     private void InputTextChanged(object sender, EventArgs e)
@@ -72,9 +72,7 @@ public partial class Main : Form
                 label_Message.Text = "Encountered invalid character(s)";
         }
         if (checkBox_Clip.Checked)
-        {
 			Clipboard.SetText(textbox_Output.Text);
-		}
     }
 
     private void label1_Click_1(object sender, EventArgs e)
