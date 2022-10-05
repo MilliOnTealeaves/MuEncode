@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace EncodeDecode;
 
 class Encoder
@@ -73,11 +70,11 @@ class Encoder
 		MorseF.Add('$', "...-..-");
 		MorseF.Add('@', ".--.-.");
 
-		foreach ( KeyValuePair<char, string> kvp in MorseF)
+		foreach (KeyValuePair<char, string> kvp in MorseF)
 		{
 			MorseT.Add(kvp.Value, kvp.Key);
 		}
-	}	
+	}
 
 	public static string ToMorse(string encIn, out bool error)
 	{
@@ -86,10 +83,13 @@ class Encoder
 		string encOut = "";
 		for (int i = 0; i < encIn.Length; i++)
 		{
-			try {
+			try
+			{
 				encOut += MorseF[encIn[i]] + " ";
 			}
-			catch (KeyNotFoundException) {
+			catch (KeyNotFoundException)
+			{
+				//bypass this character, don't decode it
 				encOut += encIn[i] + " ";
 				error = true;
 			}
@@ -105,14 +105,17 @@ class Encoder
 		while (encIn.Length > 1)
 		{
 			string thisChar = encIn.Substring(0, encIn.IndexOf(' '));
-			try {
+			try
+			{
 				encOut += MorseT[thisChar];
 			}
-			catch (KeyNotFoundException) {
-				encOut += thisChar +" ";
+			catch (KeyNotFoundException)
+			{
+				//bypass this character, don't decode it
+				encOut += thisChar + " ";
 				error = true;
 			}
-			encIn = encIn.Remove(0, encIn.IndexOf(' ')+1);		
+			encIn = encIn.Remove(0, encIn.IndexOf(' ') + 1);
 		}
 		return encOut;
 	}
