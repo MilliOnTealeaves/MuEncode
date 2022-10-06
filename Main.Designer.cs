@@ -48,7 +48,7 @@
 			// 
 			this.radio_Encode.AutoSize = true;
 			this.radio_Encode.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-			this.radio_Encode.Location = new System.Drawing.Point(146, 196);
+			this.radio_Encode.Location = new System.Drawing.Point(146, 195);
 			this.radio_Encode.Name = "radio_Encode";
 			this.radio_Encode.Size = new System.Drawing.Size(63, 17);
 			this.radio_Encode.TabIndex = 1;
@@ -90,7 +90,7 @@
 			this.button_Run.Location = new System.Drawing.Point(305, 186);
 			this.button_Run.Name = "button_Run";
 			this.button_Run.Size = new System.Drawing.Size(86, 35);
-			this.button_Run.TabIndex = 4;
+			this.button_Run.TabIndex = 3;
 			this.button_Run.Text = "RUN";
 			this.button_Run.UseVisualStyleBackColor = false;
 			this.button_Run.Click += new System.EventHandler(this.RunClicked);
@@ -99,7 +99,7 @@
 			// 
 			this.radio_Decode.AutoSize = true;
 			this.radio_Decode.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-			this.radio_Decode.Location = new System.Drawing.Point(226, 196);
+			this.radio_Decode.Location = new System.Drawing.Point(226, 195);
 			this.radio_Decode.Name = "radio_Decode";
 			this.radio_Decode.Size = new System.Drawing.Size(64, 17);
 			this.radio_Decode.TabIndex = 2;
@@ -118,7 +118,7 @@
 			this.textbox_Input.Location = new System.Drawing.Point(140, 80);
 			this.textbox_Input.Multiline = true;
 			this.textbox_Input.Name = "textbox_Input";
-			this.textbox_Input.Size = new System.Drawing.Size(251, 100);
+			this.textbox_Input.Size = new System.Drawing.Size(252, 100);
 			this.textbox_Input.TabIndex = 0;
 			this.textbox_Input.TextChanged += new System.EventHandler(this.InputTextChanged);
 			// 
@@ -144,8 +144,8 @@
 			this.textbox_Output.Multiline = true;
 			this.textbox_Output.Name = "textbox_Output";
 			this.textbox_Output.ReadOnly = true;
-			this.textbox_Output.Size = new System.Drawing.Size(379, 80);
-			this.textbox_Output.TabIndex = 5;
+			this.textbox_Output.Size = new System.Drawing.Size(380, 80);
+			this.textbox_Output.TabIndex = 4;
 			// 
 			// label_Output
 			// 
@@ -172,7 +172,7 @@
 			this.checkBox_Clip.Location = new System.Drawing.Point(12, 332);
 			this.checkBox_Clip.Name = "checkBox_Clip";
 			this.checkBox_Clip.Size = new System.Drawing.Size(254, 30);
-			this.checkBox_Clip.TabIndex = 3;
+			this.checkBox_Clip.TabIndex = 5;
 			this.checkBox_Clip.Text = "Copy Output to Clipboard";
 			this.checkBox_Clip.UseVisualStyleBackColor = true;
 			this.checkBox_Clip.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
@@ -184,7 +184,7 @@
 			this.button_Clear.FlatAppearance.BorderSize = 0;
 			this.button_Clear.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
 			this.button_Clear.ForeColor = System.Drawing.Color.White;
-			this.button_Clear.Location = new System.Drawing.Point(255, 327);
+			this.button_Clear.Location = new System.Drawing.Point(255, 330);
 			this.button_Clear.Name = "button_Clear";
 			this.button_Clear.Size = new System.Drawing.Size(136, 35);
 			this.button_Clear.TabIndex = 6;
@@ -197,7 +197,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
 			this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(16)))), ((int)(((byte)(16)))));
-			this.ClientSize = new System.Drawing.Size(405, 377);
+			this.ClientSize = new System.Drawing.Size(404, 381);
 			this.Controls.Add(this.button_Run);
 			this.Controls.Add(this.button_Clear);
 			this.Controls.Add(this.checkBox_Clip);
