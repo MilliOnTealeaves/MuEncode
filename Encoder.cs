@@ -5,7 +5,7 @@ class Encoder
 	public static Dictionary<char, string> MorseF = new Dictionary<char, string>();
 	public static Dictionary<string, char> MorseT = new Dictionary<string, char>();
 
-	public static void LoadMorse()
+	public static void InitializeMorse()
 	{
 		// SPACE
 		MorseF.Add(' ', "/");

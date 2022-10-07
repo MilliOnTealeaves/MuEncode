@@ -78,7 +78,6 @@
 			this.label_Title.Size = new System.Drawing.Size(206, 29);
 			this.label_Title.TabIndex = 5;
 			this.label_Title.Text = "Welcome to μEncode!";
-			this.label_Title.Click += new System.EventHandler(this.label1_Click);
 			// 
 			// button_Run
 			// 
@@ -120,7 +119,6 @@
 			this.textbox_Input.Name = "textbox_Input";
 			this.textbox_Input.Size = new System.Drawing.Size(252, 100);
 			this.textbox_Input.TabIndex = 0;
-			this.textbox_Input.TextChanged += new System.EventHandler(this.InputTextChanged);
 			// 
 			// label_Prompt
 			// 
@@ -194,8 +192,8 @@
 			// 
 			// Main
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(16)))), ((int)(((byte)(16)))));
 			this.ClientSize = new System.Drawing.Size(404, 381);
 			this.Controls.Add(this.button_Run);
@@ -214,7 +212,9 @@
 			this.ForeColor = System.Drawing.Color.White;
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+			this.MaximizeBox = false;
 			this.Name = "Main";
+			this.ShowIcon = false;
 			this.Text = "μEncode";
 			this.Load += new System.EventHandler(this.Form1_Load);
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
