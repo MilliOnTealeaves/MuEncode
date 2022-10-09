@@ -38,7 +38,7 @@
 			this.label_Prompt = new System.Windows.Forms.Label();
 			this.textbox_Output = new System.Windows.Forms.TextBox();
 			this.label_Output = new System.Windows.Forms.Label();
-			this.label_Message = new System.Windows.Forms.Label();
+			this.label_Note = new System.Windows.Forms.Label();
 			this.checkBox_Clip = new System.Windows.Forms.CheckBox();
 			this.button_Clear = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -149,20 +149,20 @@
 			// 
 			this.label_Output.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.label_Output.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(188)))), ((int)(((byte)(237)))), ((int)(((byte)(162)))));
-			this.label_Output.Location = new System.Drawing.Point(12, 223);
+			this.label_Output.Location = new System.Drawing.Point(12, 220);
 			this.label_Output.Name = "label_Output";
 			this.label_Output.Size = new System.Drawing.Size(100, 20);
 			this.label_Output.TabIndex = 7;
 			this.label_Output.Text = "Output:";
 			// 
-			// label_Message
+			// label_Note
 			// 
-			this.label_Message.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-			this.label_Message.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-			this.label_Message.Location = new System.Drawing.Point(140, 220);
-			this.label_Message.Name = "label_Message";
-			this.label_Message.Size = new System.Drawing.Size(240, 20);
-			this.label_Message.TabIndex = 11;
+			this.label_Note.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.label_Note.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+			this.label_Note.Location = new System.Drawing.Point(140, 220);
+			this.label_Note.Name = "label_Note";
+			this.label_Note.Size = new System.Drawing.Size(240, 20);
+			this.label_Note.TabIndex = 11;
 			// 
 			// checkBox_Clip
 			// 
@@ -199,7 +199,7 @@
 			this.Controls.Add(this.button_Run);
 			this.Controls.Add(this.button_Clear);
 			this.Controls.Add(this.checkBox_Clip);
-			this.Controls.Add(this.label_Message);
+			this.Controls.Add(this.label_Note);
 			this.Controls.Add(this.label_Output);
 			this.Controls.Add(this.textbox_Output);
 			this.Controls.Add(this.textbox_Input);
@@ -233,7 +233,7 @@
 		private Label label_Prompt;
 		private TextBox textbox_Output;
 		private Label label_Output;
-		private Label label_Message;
+		private Label label_Note;
 		private RadioButton radio_Encode;
 		private CheckBox checkBox_Clip;
 		private Button button_Clear;

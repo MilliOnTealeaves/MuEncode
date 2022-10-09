@@ -2,11 +2,23 @@ namespace EncodeDecode;
 
 class Encoder
 {
+	/// <summary>
+	/// Dictionary with alphanumeric characters mapped to morse code
+	/// </summary>
 	public static Dictionary<char, string> MorseF = new Dictionary<char, string>();
+	/// <summary>
+	/// Dictionary with morse code mapped to alphanumeric characters.
+	/// Reverse of <c>MorseF</c>
+	/// </summary>
 	public static Dictionary<string, char> MorseT = new Dictionary<string, char>();
 
+	/// <summary>
+	/// Adds data to the <c>MorseT</c> and <c>MorseF</c> dictionaries
+	/// </summary>
 	public static void InitializeMorse()
 	{
+		// Fill Morse dictionary
+
 		// SPACE
 		MorseF.Add(' ', "/");
 
@@ -70,12 +82,20 @@ class Encoder
 		MorseF.Add('$', "...-..-");
 		MorseF.Add('@', ".--.-.");
 
+		// Fill reverse dictionary (MorseT)
+		// Add opposite key-value pair for each existing in MorseF
 		foreach (KeyValuePair<char, string> kvp in MorseF)
 		{
 			MorseT.Add(kvp.Value, kvp.Key);
 		}
 	}
 
+	/// <summary>
+	/// Convert Text to Morse code
+	/// </summary>
+	/// <param name="encIn">Text input to be converted</param>
+	/// <param name="error">IO variable, provides info to <c>Main</c> about input errors encountered</param>
+	/// <returns>Return is morse code converted from text</returns>
 	public static string ToMorse(string encIn, out bool error)
 	{
 		error = false;
@@ -89,13 +109,21 @@ class Encoder
 			}
 			catch (KeyNotFoundException)
 			{
-				//bypass this character, don't decode it
+				// bypass this character, don't decode it
 				encOut += encIn[i] + " ";
+				// lets Main know that an error has occured
 				error = true;
 			}
 		}
 		return encOut;
 	}
+
+	/// <summary>
+	/// Convert Morse code to Text
+	/// </summary>
+	/// <param name="encIn">Morse code input</param>
+	/// <param name="error">IO variable, provides info to <c>Main</c> about input characters encountered</param>
+	/// <returns>Return is alphanumeric text conveted from Morse</returns>
 	public static string FromMorse(string encIn, out bool error)
 	{
 		error = false;
@@ -111,7 +139,7 @@ class Encoder
 			}
 			catch (KeyNotFoundException)
 			{
-				//bypass this character, don't decode it
+				// bypass this character, don't decode it
 				encOut += thisChar + " ";
 				error = true;
 			}
