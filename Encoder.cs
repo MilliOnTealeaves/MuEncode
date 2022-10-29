@@ -1,4 +1,4 @@
-namespace EncodeDecode;
+namespace MuEncode;
 class Encoder
 {
 	/// <summary>
