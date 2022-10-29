@@ -26,6 +26,7 @@ public partial class Main : Form
         if (radio_Encode.Checked)
             textbox_Input.PlaceholderText = "Type message to be encoded";
     }
+
     private void DecodeCheckedChanged(object sender, EventArgs e)
     {
         if (radio_Decode.Checked)
@@ -49,14 +50,14 @@ public partial class Main : Form
         // if encode is checked
         if (radio_Encode.Checked)
         {
-            textbox_Output.Text = Encoder.ToMorse(textbox_Input.Text, out inputError);
+            textbox_Output.Text = Encoder.ToMorse(Encoder.MultiShift(textbox_Input.Text, true), out inputError);
             if (inputError)
                 InvalidCharError();
         }
         // if decode is checked
         else if (radio_Decode.Checked)
         {
-            textbox_Output.Text = Encoder.FromMorse(textbox_Input.Text, out inputError);
+            textbox_Output.Text = Encoder.MultiShift(Encoder.FromMorse(textbox_Input.Text, out inputError), false);
             if (inputError)
                 InvalidCharError();
         }

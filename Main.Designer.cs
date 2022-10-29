@@ -50,7 +50,7 @@
 			this.radio_Encode.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.radio_Encode.Location = new System.Drawing.Point(146, 195);
 			this.radio_Encode.Name = "radio_Encode";
-			this.radio_Encode.Size = new System.Drawing.Size(63, 17);
+			this.radio_Encode.Size = new System.Drawing.Size(74, 23);
 			this.radio_Encode.TabIndex = 1;
 			this.radio_Encode.TabStop = true;
 			this.radio_Encode.Text = "Encode";
@@ -75,7 +75,7 @@
 			this.label_Title.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(188)))), ((int)(((byte)(237)))), ((int)(((byte)(162)))));
 			this.label_Title.Location = new System.Drawing.Point(136, 10);
 			this.label_Title.Name = "label_Title";
-			this.label_Title.Size = new System.Drawing.Size(206, 29);
+			this.label_Title.Size = new System.Drawing.Size(255, 36);
 			this.label_Title.TabIndex = 5;
 			this.label_Title.Text = "Welcome to μEncode!";
 			// 
@@ -100,7 +100,7 @@
 			this.radio_Decode.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.radio_Decode.Location = new System.Drawing.Point(226, 195);
 			this.radio_Decode.Name = "radio_Decode";
-			this.radio_Decode.Size = new System.Drawing.Size(64, 17);
+			this.radio_Decode.Size = new System.Drawing.Size(76, 23);
 			this.radio_Decode.TabIndex = 2;
 			this.radio_Decode.TabStop = true;
 			this.radio_Decode.Text = "Decode";
@@ -192,7 +192,7 @@
 			// 
 			// Main
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(16)))), ((int)(((byte)(16)))));
 			this.ClientSize = new System.Drawing.Size(404, 381);
@@ -214,7 +214,6 @@
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MaximizeBox = false;
 			this.Name = "Main";
-			this.ShowIcon = false;
 			this.Text = "μEncode";
 			this.Load += new System.EventHandler(this.Form1_Load);
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
