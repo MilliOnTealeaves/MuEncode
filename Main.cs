@@ -1,4 +1,4 @@
-namespace EncodeDecode;
+namespace MuEncode;
 public partial class Main : Form
 {
     public Main()
@@ -38,6 +38,7 @@ public partial class Main : Form
     /// </summary>
     private void RunClicked(object sender, EventArgs e)
     {
+        label_Note.Text = "";
         bool inputError;
         // so it doesn't run with empty input
         if (string.IsNullOrEmpty(textbox_Input.Text.Trim()))
@@ -45,19 +46,54 @@ public partial class Main : Form
             label_Note.Text = "Input is empty, please try again";
             return;
         }
-        label_Note.Text = "";
 
         // if encode is checked
         if (radio_Encode.Checked)
         {
-            textbox_Output.Text = Encoder.ToMorse(Encoder.MultiShift(textbox_Input.Text, true), out inputError);
+            // regular morse code
+            string input = "";
+            if (comboBox1.SelectedIndex == 0)
+            {
+                input = textbox_Input.Text;
+            }
+            else if (comboBox1.SelectedIndex == 1)
+            {
+                input = Encoder.CharShift(textbox_Input.Text, true);
+            }
+            else if (comboBox1.SelectedIndex == 2)
+            {
+                input = Encoder.MultiShift(textbox_Input.Text, true);
+            }
+            else
+            {
+                label_Note.Text = "Please select a mode";
+            }
+            textbox_Output.Text = Encoder.ToMorse(input, out inputError);
+
             if (inputError)
                 InvalidCharError();
         }
         // if decode is checked
         else if (radio_Decode.Checked)
         {
-            textbox_Output.Text = Encoder.MultiShift(Encoder.FromMorse(textbox_Input.Text, out inputError), false);
+            string input = Encoder.FromMorse(textbox_Input.Text, out inputError);
+            if (comboBox1.SelectedIndex == 0)
+            {
+                textbox_Output.Text = input;
+            }
+            else if (comboBox1.SelectedIndex == 1)
+            {
+                textbox_Output.Text = Encoder.CharShift(input, false);
+            }
+            else if (comboBox1.SelectedIndex == 2)
+            {
+                textbox_Output.Text = Encoder.MultiShift(input, false);
+            }
+            else
+            {
+                label_Note.Text = "Please select a mode";
+            }
+
             if (inputError)
                 InvalidCharError();
         }
@@ -88,5 +124,9 @@ public partial class Main : Form
     {
         label_Note.Text = "Encountered invalid character(s)";
         System.Media.SystemSounds.Asterisk.Play();
+    }
+    private void link_ClearInput_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+    {
+        textbox_Input.Text = "";
     }
 }
