@@ -107,6 +107,7 @@ public partial class Main : Form
         if (checkBox_Clip.Checked && string.IsNullOrWhiteSpace(textbox_Output.Text) == false)
         {
             Clipboard.SetText(textbox_Output.Text);
+            label_Note.Text = "Output copied!";
         }
     }
 

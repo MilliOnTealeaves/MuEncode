@@ -167,9 +167,9 @@ class Encoder
 	/// <returns>Return is morse code converted from text</returns>
 	public static string ToMorse(string encIn, out bool error)
 	{
-		error = false;
-		encIn = encIn.ToLower();
 		string encOut = "";
+		encIn = encIn.ToLower();
+		error = false;
 		for (int i = 0; i < encIn.Length; i++)
 		{
 			try
@@ -202,15 +202,16 @@ class Encoder
 		string encOut = "";
 		while (encIn.Length > 1)
 		{
-			string thisChar = encIn[..encIn.IndexOf(' ')];
+			// current morse code sequence, one character long.
+			string currentChar = encIn[..encIn.IndexOf(' ')];
 			try
 			{
-				encOut += MorseT[thisChar];
+				encOut += MorseT[currentChar];
 			}
 			catch (KeyNotFoundException)
 			{
 				// bypass this character, don't decode it
-				encOut += thisChar + " ";
+				encOut += currentChar + " ";
 				error = true;
 			}
 			encIn = encIn.Remove(0, encIn.IndexOf(' ') + 1);
