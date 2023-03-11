@@ -1,3 +1,5 @@
+using System.Security.Cryptography;
+
 namespace MuEncode;
 public partial class Main : Form
 {
@@ -5,6 +7,7 @@ public partial class Main : Form
     {
         InitializeComponent();
         Encoder.InitializeMorse();
+        WindowExpanded = false;
     }
 
     private void Form1_Load(object sender, EventArgs e)
@@ -24,13 +27,19 @@ public partial class Main : Form
     private void EncodeCheckedChanged(object sender, EventArgs e)
     {
         if (radio_Encode.Checked)
+        {
             textbox_Input.PlaceholderText = "Type message to be encoded";
+        }
     }
 
     private void DecodeCheckedChanged(object sender, EventArgs e)
     {
         if (radio_Decode.Checked)
-            textbox_Input.PlaceholderText = "Type morse code to decode";
+        {
+            textbox_Input.PlaceholderText = "Type message to be decoded";
+            if (comboBox1.SelectedIndex == 3)
+                ExpandWindow();
+        }
     }
 
     /// <summary>
@@ -38,65 +47,77 @@ public partial class Main : Form
     /// </summary>
     private void RunClicked(object sender, EventArgs e)
     {
+        bool encode = radio_Encode.Checked;
         label_Note.Text = "";
-        bool inputError;
-        // so it doesn't run with empty input
-        if (string.IsNullOrEmpty(textbox_Input.Text.Trim()))
+        string output = textbox_Input.Text;
+        // check for empty input
+        if (string.IsNullOrEmpty(output.Trim()))
         {
             label_Note.Text = "Input is empty, please try again";
             return;
         }
+        if (comboBox1.SelectedIndex == -1)
+        {
+            label_Note.Text = "Please select a mode";
+        }
 
         // if encode is checked
-        if (radio_Encode.Checked)
+        if (encode)
         {
-            // regular morse code
-            string input = "";
-            if (comboBox1.SelectedIndex == 0)
+            // morse code operations
+            if (comboBox1.SelectedIndex < 3)
             {
-                input = textbox_Input.Text;
-            }
-            else if (comboBox1.SelectedIndex == 1)
-            {
-                input = Encoder.CharShift(textbox_Input.Text, true);
-            }
-            else if (comboBox1.SelectedIndex == 2)
-            {
-                input = Encoder.MultiShift(textbox_Input.Text, true);
+                if (comboBox1.SelectedIndex == 1)
+                    output = Encoder.CharShift(output, encode);
+                if (comboBox1.SelectedIndex == 2)
+                    output = Encoder.MultiShift(output, encode);
+                output = Encoder.MorseCode(output, out bool invalidChar, encode);
+                if (invalidChar)
+                    InvalidCharError();
             }
             else
             {
-                label_Note.Text = "Please select a mode";
-            }
-            textbox_Output.Text = Encoder.ToMorse(input, out inputError);
+                using Aes a = Aes.Create();
+                if (string.IsNullOrEmpty(textBox_IV.Text) || string.IsNullOrEmpty(textBox_Key.Text))
+                {
+                    textBox_IV.Text = Convert.ToBase64String(a.IV);
+                    textBox_Key.Text = Convert.ToBase64String(a.Key);
+                }
+                else
+                {
+                    a.Key = Convert.FromBase64String(textBox_Key.Text);
+                    a.IV = Convert.FromBase64String(textBox_IV.Text);
+                }
 
-            if (inputError)
-                InvalidCharError();
+                output = Encoder.AES(output, a.Key, a.IV, encode);
+
+            }
+
         }
         // if decode is checked
-        else if (radio_Decode.Checked)
+        else
         {
-            string input = Encoder.FromMorse(textbox_Input.Text, out inputError);
-            if (comboBox1.SelectedIndex == 0)
+            if (comboBox1.SelectedIndex < 3)
             {
-                textbox_Output.Text = input;
-            }
-            else if (comboBox1.SelectedIndex == 1)
-            {
-                textbox_Output.Text = Encoder.CharShift(input, false);
-            }
-            else if (comboBox1.SelectedIndex == 2)
-            {
-                textbox_Output.Text = Encoder.MultiShift(input, false);
+                output = Encoder.MorseCode(output, out bool invalidChar, encode);
+                if (comboBox1.SelectedIndex == 1)
+                    output = Encoder.CharShift(output, encode);
+                if (comboBox1.SelectedIndex == 2)
+                    output = Encoder.MultiShift(output, encode);
+                if (invalidChar)
+                    InvalidCharError();
             }
             else
             {
-                label_Note.Text = "Please select a mode";
-            }
 
-            if (inputError)
-                InvalidCharError();
+                byte[] key = Convert.FromBase64String(textBox_Key.Text);
+                byte[] IV = Convert.FromBase64String(textBox_IV.Text);
+
+                output = Encoder.AES(output, key, IV, encode);
+            }
         }
+
+        textbox_Output.Text = output;
         if (checkBox_Clip.Checked)
             Clipboard.SetText(textbox_Output.Text);
     }
@@ -129,5 +150,91 @@ public partial class Main : Form
     private void link_ClearInput_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
     {
         textbox_Input.Text = "";
+    }
+
+    private bool WindowExpanded;
+    private void ExpandWindow()
+    {
+        if (!WindowExpanded)
+        {
+            this.Width += 245;
+            textbox_Output.Width += 245;
+            button_Run.Left += 245;
+            comboBox1.Left += 245;
+            button_ClearOutput.Left += 245;
+
+            textBox_IV.Visible = true;
+            textBox_IV.Left += 260;
+            textBox_IV.Width += 100;
+
+            textBox_Key.Visible = true;
+            textBox_Key.Left += 260;
+            textBox_Key.Width += 100;
+
+            label_IV.Visible = true;
+            label_IV.Left += 260;
+
+            label_Key.Visible = true;
+            label_Key.Left += 260;
+
+            WindowExpanded = true;
+        }
+    }
+    private void ShrinkWindow()
+    {
+        if (WindowExpanded)
+        {
+            this.Width -= 245;
+            textbox_Output.Width -= 245;
+            button_Run.Left -= 245;
+            comboBox1.Left -= 245;
+            button_ClearOutput.Left -= 245;
+
+            textBox_IV.Visible = false;
+            textBox_IV.Left -= 260;
+            textBox_IV.Width -= 100;
+
+            textBox_Key.Visible = false;
+            textBox_Key.Left -= 260;
+            textBox_Key.Width -= 100;
+
+            label_IV.Visible = false;
+            label_IV.Left -= 260;
+
+            label_Key.Visible = false;
+            label_Key.Left -= 260;
+
+            WindowExpanded = false;
+        }
+    }
+
+    private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (comboBox1.SelectedIndex == 3)
+        {
+            ExpandWindow();
+        }
+        else if (this.Width > 500)
+        {
+            ShrinkWindow();
+        }
+    }
+
+    private void label_Key_Click(object sender, EventArgs e)
+    {
+        if (!string.IsNullOrEmpty(textBox_Key.Text))
+        {
+            Clipboard.SetText(textBox_Key.Text);
+            label_Note.Text = "Key Copied!";
+        }
+    }
+
+    private void label_IV_Click(object sender, EventArgs e)
+    {
+        if (!String.IsNullOrEmpty(textBox_IV.Text))
+        {
+            Clipboard.SetText(textBox_IV.Text);
+            label_Note.Text = "IV Copied!";
+        }
     }
 }

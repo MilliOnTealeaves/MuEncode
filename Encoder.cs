@@ -1,3 +1,5 @@
+using System.Security.Cryptography;
+
 namespace MuEncode;
 class Encoder
 {
@@ -98,6 +100,61 @@ class Encoder
 		}
 	}
 
+	/// <summary>
+	/// Encrypts a string with AES encryption, given a key and IV.
+	/// </summary>
+	/// <param name="inStr">String to be encrypted</param>
+	/// <param name="key">Encryption Key</param>
+	/// <param name="IV">Initialization Vector</param>
+	/// <returns>A cipher represenetd as a byte[]</returns>
+	private static byte[] AesEncrypt(string inStr, byte[] key, byte[] IV)
+	{
+		using Aes a = Aes.Create();
+		a.Key = key;
+		a.IV = IV;
+		ICryptoTransform encryptor = a.CreateEncryptor(a.Key, a.IV);
+
+		using MemoryStream msEncrypt = new();
+		using CryptoStream csEncrypt = new(msEncrypt, encryptor, CryptoStreamMode.Write);
+		using (StreamWriter swEncrypt = new(csEncrypt))
+			swEncrypt.Write(inStr);
+		return msEncrypt.ToArray();
+	}
+
+	/// <summary>
+	/// Decrypts a string with AES encryption, given a key and IV.
+	/// </summary>
+	/// <param name="inText">Cipher to be decrypted</param>
+	/// <param name="key">Encryption Key</param>
+	/// <param name="IV">Initialization Vector</param>
+	/// <returns>A string of decrypted text</returns>
+	private static string AesDecrypt(byte[] inText, byte[] key, byte[] IV)
+	{
+		using Aes a = Aes.Create();
+		a.Key = key;
+		a.IV = IV;
+		ICryptoTransform decryptor = a.CreateDecryptor(a.Key, a.IV);
+
+		string output;
+		using MemoryStream msDecrypt = new(inText);
+		using CryptoStream csDecrypt = new(msDecrypt, decryptor, CryptoStreamMode.Read);
+		using (StreamReader srDecrypt = new(csDecrypt))
+			output = srDecrypt.ReadToEnd();
+		return output;
+	}
+
+	public static string AES(string inStr, byte[] key, byte[] IV, bool encode)
+	{
+		if (encode)
+		{
+			return Convert.ToBase64String(AesEncrypt(inStr, key, IV));
+		}
+		else
+		{
+			return AesDecrypt(Convert.FromBase64String(inStr), key, IV);
+		}
+	}
+
 	public static string CharShift(string inStr, bool encode)
 	{
 		char[] input = inStr.ToLower().ToCharArray();
@@ -145,13 +202,12 @@ class Encoder
 		}
 		else
 		{
-			return inStr.Substring(2);
+			return inStr[2..];
 		}
 	}
 
 	public static string MultiShift(string inStr, bool encode)
 	{
-		Random r = new();
 		for (int i = 0; i < 5; i++)
 		{
 			inStr = CharShift(inStr, encode);
@@ -160,62 +216,57 @@ class Encoder
 	}
 
 	/// <summary>
-	/// Convert Text to Morse code
+	/// Converts between Morse Code and plain text.
 	/// </summary>
-	/// <param name="encIn">Text input to be converted</param>
-	/// <param name="error">IO variable, provides info to <c>Main</c> about input errors encountered</param>
-	/// <returns>Return is morse code converted from text</returns>
-	public static string ToMorse(string encIn, out bool error)
+	/// <param name="encIn">Input</param>
+	/// <param name="error">Indicades whether or not an error has occured</param>
+	/// <param name="encode">Determines the mode of the encoder. True encodes, false decodes</param>
+	/// <returns></returns>
+	public static string MorseCode(string encIn, out bool error, bool encode)
 	{
-		string encOut = "";
 		encIn = encIn.ToLower();
+		string encOut = "";
 		error = false;
-		for (int i = 0; i < encIn.Length; i++)
+
+		// ENCODE
+		if (encode)
 		{
-			try
+			for (int i = 0; i < encIn.Length; i++)
 			{
-				encOut += MorseF[encIn[i]] + " ";
-			}
-			catch (KeyNotFoundException)
-			{
-				// bypass this character, don't decode it
-				encOut += encIn[i] + " ";
-				// lets Main know that an error has occured
-				error = true;
+				try
+				{
+					encOut += MorseF[encIn[i]] + " ";
+				}
+				catch (KeyNotFoundException)
+				{
+					// bypass this character, don't decode it
+					encOut += encIn[i] + " ";
+					// let Main know that an error has occured
+					error = true;
+				}
 			}
 		}
-		return encOut;
-	}
-
-	/// <summary>
-	/// Convert Morse code to Text
-	/// </summary>
-	/// <param name="encIn">Morse code input</param>
-	/// <param name="error">IO variable, provides info to <c>Main</c> about illegal characters encountered in input</param>
-	/// <returns>Return is alphanumeric text conveted from Morse</returns>
-	public static string FromMorse(string encIn, out bool error)
-	{
-
-		error = false;
-		encIn = encIn.ToLower();
-		encIn = encIn.Trim() + " ";
-		string encOut = "";
-		while (encIn.Length > 1)
+		// DECODE
+		else
 		{
-			// current morse code sequence, one character long.
-			string currentChar = encIn[..encIn.IndexOf(' ')];
-			try
+			encIn = encIn.Trim() + " ";
+			while (encIn.Length > 1)
 			{
-				encOut += MorseT[currentChar];
+				// current morse code sequence, one character long.
+				string currentChar = encIn[..encIn.IndexOf(' ')];
+				try
+				{
+					encOut += MorseT[currentChar];
+				}
+				catch (KeyNotFoundException)
+				{
+					// bypass this character, don't decode it
+					encOut += currentChar + " ";
+				}
+				encIn = encIn.Remove(0, encIn.IndexOf(' ') + 1);
 			}
-			catch (KeyNotFoundException)
-			{
-				// bypass this character, don't decode it
-				encOut += currentChar + " ";
-				error = true;
-			}
-			encIn = encIn.Remove(0, encIn.IndexOf(' ') + 1);
 		}
+
 		return encOut;
 	}
 }

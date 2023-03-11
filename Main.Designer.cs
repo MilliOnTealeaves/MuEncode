@@ -43,6 +43,10 @@
 			this.button_ClearOutput = new System.Windows.Forms.Button();
 			this.comboBox1 = new System.Windows.Forms.ComboBox();
 			this.link_ClearInput = new System.Windows.Forms.LinkLabel();
+			this.label_Key = new System.Windows.Forms.Label();
+			this.textBox_Key = new System.Windows.Forms.TextBox();
+			this.textBox_IV = new System.Windows.Forms.TextBox();
+			this.label_IV = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -52,7 +56,7 @@
 			this.radio_Encode.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.radio_Encode.Location = new System.Drawing.Point(140, 186);
 			this.radio_Encode.Name = "radio_Encode";
-			this.radio_Encode.Size = new System.Drawing.Size(63, 17);
+			this.radio_Encode.Size = new System.Drawing.Size(74, 23);
 			this.radio_Encode.TabIndex = 1;
 			this.radio_Encode.TabStop = true;
 			this.radio_Encode.Text = "Encode";
@@ -77,7 +81,7 @@
 			this.label_Title.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(188)))), ((int)(((byte)(237)))), ((int)(((byte)(162)))));
 			this.label_Title.Location = new System.Drawing.Point(136, 10);
 			this.label_Title.Name = "label_Title";
-			this.label_Title.Size = new System.Drawing.Size(206, 29);
+			this.label_Title.Size = new System.Drawing.Size(255, 36);
 			this.label_Title.TabIndex = 5;
 			this.label_Title.Text = "Welcome to μEncode!";
 			// 
@@ -102,7 +106,7 @@
 			this.radio_Decode.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.radio_Decode.Location = new System.Drawing.Point(140, 209);
 			this.radio_Decode.Name = "radio_Decode";
-			this.radio_Decode.Size = new System.Drawing.Size(64, 17);
+			this.radio_Decode.Size = new System.Drawing.Size(76, 23);
 			this.radio_Decode.TabIndex = 2;
 			this.radio_Decode.TabStop = true;
 			this.radio_Decode.Text = "Decode";
@@ -202,11 +206,13 @@
 			this.comboBox1.Items.AddRange(new object[] {
             "Morse Code",
             "Random Char Shift",
-            "Repeated Shift"});
+            "Repeated Shift",
+            "AES Encryption"});
 			this.comboBox1.Location = new System.Drawing.Point(255, 186);
 			this.comboBox1.Name = "comboBox1";
-			this.comboBox1.Size = new System.Drawing.Size(136, 21);
+			this.comboBox1.Size = new System.Drawing.Size(136, 25);
 			this.comboBox1.TabIndex = 3;
+			this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
 			// 
 			// link_ClearInput
 			// 
@@ -216,19 +222,78 @@
 			this.link_ClearInput.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
 			this.link_ClearInput.Location = new System.Drawing.Point(140, 229);
 			this.link_ClearInput.Name = "link_ClearInput";
-			this.link_ClearInput.Size = new System.Drawing.Size(77, 19);
+			this.link_ClearInput.Size = new System.Drawing.Size(95, 23);
 			this.link_ClearInput.TabIndex = 12;
 			this.link_ClearInput.TabStop = true;
 			this.link_ClearInput.Text = "Clear Input";
 			this.link_ClearInput.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
 			this.link_ClearInput.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.link_ClearInput_LinkClicked);
 			// 
+			// label_Key
+			// 
+			this.label_Key.AutoEllipsis = true;
+			this.label_Key.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.label_Key.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(188)))), ((int)(((byte)(237)))), ((int)(((byte)(162)))));
+			this.label_Key.Location = new System.Drawing.Point(140, 57);
+			this.label_Key.Name = "label_Key";
+			this.label_Key.Size = new System.Drawing.Size(150, 20);
+			this.label_Key.TabIndex = 13;
+			this.label_Key.Text = "Key:";
+			this.label_Key.Visible = false;
+			this.label_Key.Click += new System.EventHandler(this.label_Key_Click);
+			// 
+			// textBox_Key
+			// 
+			this.textBox_Key.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+			this.textBox_Key.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.textBox_Key.Cursor = System.Windows.Forms.Cursors.IBeam;
+			this.textBox_Key.Font = new System.Drawing.Font("NK57 Monospace Sc Bk", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.textBox_Key.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+			this.textBox_Key.Location = new System.Drawing.Point(140, 80);
+			this.textBox_Key.Multiline = true;
+			this.textBox_Key.Name = "textBox_Key";
+			this.textBox_Key.Size = new System.Drawing.Size(136, 40);
+			this.textBox_Key.TabIndex = 14;
+			this.textBox_Key.UseSystemPasswordChar = true;
+			this.textBox_Key.Visible = false;
+			// 
+			// textBox_IV
+			// 
+			this.textBox_IV.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+			this.textBox_IV.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.textBox_IV.Cursor = System.Windows.Forms.Cursors.IBeam;
+			this.textBox_IV.Font = new System.Drawing.Font("NK57 Monospace Sc Bk", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.textBox_IV.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+			this.textBox_IV.Location = new System.Drawing.Point(140, 156);
+			this.textBox_IV.Multiline = true;
+			this.textBox_IV.Name = "textBox_IV";
+			this.textBox_IV.Size = new System.Drawing.Size(136, 24);
+			this.textBox_IV.TabIndex = 16;
+			this.textBox_IV.Visible = false;
+			// 
+			// label_IV
+			// 
+			this.label_IV.AutoEllipsis = true;
+			this.label_IV.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.label_IV.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(188)))), ((int)(((byte)(237)))), ((int)(((byte)(162)))));
+			this.label_IV.Location = new System.Drawing.Point(140, 133);
+			this.label_IV.Name = "label_IV";
+			this.label_IV.Size = new System.Drawing.Size(150, 20);
+			this.label_IV.TabIndex = 15;
+			this.label_IV.Text = "IV:";
+			this.label_IV.Visible = false;
+			this.label_IV.Click += new System.EventHandler(this.label_IV_Click);
+			// 
 			// Main
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(16)))), ((int)(((byte)(16)))));
 			this.ClientSize = new System.Drawing.Size(404, 421);
+			this.Controls.Add(this.textBox_IV);
+			this.Controls.Add(this.label_IV);
+			this.Controls.Add(this.textBox_Key);
+			this.Controls.Add(this.label_Key);
 			this.Controls.Add(this.link_ClearInput);
 			this.Controls.Add(this.comboBox1);
 			this.Controls.Add(this.button_Run);
@@ -273,5 +338,9 @@
 		private Button button_ClearOutput;
 		private ComboBox comboBox1;
 		private LinkLabel link_ClearInput;
+		private Label label_Key;
+		private TextBox textBox_Key;
+		private TextBox textBox_IV;
+		private Label label_IV;
 	}
 }
