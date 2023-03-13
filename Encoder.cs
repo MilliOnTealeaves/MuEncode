@@ -239,10 +239,17 @@ class Encoder
 				}
 				catch (KeyNotFoundException)
 				{
-					// bypass this character, don't decode it
-					encOut += encIn[i] + " ";
-					// let Main know that an error has occured
-					error = true;
+					if (encIn[i] == '\n' && encIn[i - 1] == '\r')
+					{
+						encOut += "\r\n";
+					}
+					else if (encIn[i] != '\r')
+					{
+						// bypass this character, don't decode it
+						encOut += encIn[i] + " ";
+						// let Main know that an error has occured
+						error = true;
+					}
 				}
 			}
 		}
@@ -250,20 +257,45 @@ class Encoder
 		else
 		{
 			encIn = encIn.Trim() + " ";
+			for (int i = 1; i < encIn.Length; i++)
+			{
+				if (encIn[i] == '\r' && encIn[i - 1] != ' ')
+				{
+					encIn = encIn.Insert(i, " ");
+					i++;
+				}
+			}
 			while (encIn.Length > 1)
 			{
 				// current morse code sequence, one character long.
-				string currentChar = encIn[..encIn.IndexOf(' ')];
-				try
+				string currentChar;
+				if (encIn[0] != '\r')
 				{
-					encOut += MorseT[currentChar];
+					currentChar = encIn[..encIn.IndexOf(' ')];
+					try
+					{
+						encOut += MorseT[currentChar];
+					}
+					catch (KeyNotFoundException)
+					{
+						if (currentChar == "\r\n")
+						{
+							encOut += "\r\n";
+						}
+						else
+						{
+							encOut += currentChar + " ";
+						}
+						// bypass this character, don't decode it
+						error = true;
+					}
+					encIn = encIn.Remove(0, encIn.IndexOf(' ') + 1);
 				}
-				catch (KeyNotFoundException)
+				else
 				{
-					// bypass this character, don't decode it
-					encOut += currentChar + " ";
+					encOut += "\r\n";
+					encIn = encIn.Remove(0, encIn.IndexOf('\n') + 1);
 				}
-				encIn = encIn.Remove(0, encIn.IndexOf(' ') + 1);
 			}
 		}
 
