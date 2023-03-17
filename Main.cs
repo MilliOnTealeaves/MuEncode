@@ -85,8 +85,17 @@ public partial class Main : Form
                 }
                 else
                 {
-                    a.Key = Convert.FromBase64String(textBox_Key.Text);
-                    a.IV = Convert.FromBase64String(textBox_IV.Text);
+                    try
+                    {
+                        a.Key = Convert.FromBase64String(textBox_Key.Text);
+                        a.IV = Convert.FromBase64String(textBox_IV.Text);
+                    }
+                    catch (CryptographicException)
+                    {
+                        label_Note.Text = "Key or IV invalid, new key and IV generated.";
+                        textBox_IV.Text = Convert.ToBase64String(a.IV);
+                        textBox_Key.Text = Convert.ToBase64String(a.Key);
+                    }
                 }
 
                 output = Encoder.AES(output, a.Key, a.IV, encode);
