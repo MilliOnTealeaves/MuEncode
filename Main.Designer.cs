@@ -47,6 +47,7 @@
 			this.textBox_Key = new System.Windows.Forms.TextBox();
 			this.textBox_IV = new System.Windows.Forms.TextBox();
 			this.label_IV = new System.Windows.Forms.Label();
+			this.label_ClearPair = new System.Windows.Forms.LinkLabel();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -56,7 +57,7 @@
 			this.radio_Encode.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.radio_Encode.Location = new System.Drawing.Point(140, 186);
 			this.radio_Encode.Name = "radio_Encode";
-			this.radio_Encode.Size = new System.Drawing.Size(74, 23);
+			this.radio_Encode.Size = new System.Drawing.Size(63, 17);
 			this.radio_Encode.TabIndex = 1;
 			this.radio_Encode.TabStop = true;
 			this.radio_Encode.Text = "Encode";
@@ -81,7 +82,7 @@
 			this.label_Title.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(188)))), ((int)(((byte)(237)))), ((int)(((byte)(162)))));
 			this.label_Title.Location = new System.Drawing.Point(136, 10);
 			this.label_Title.Name = "label_Title";
-			this.label_Title.Size = new System.Drawing.Size(255, 36);
+			this.label_Title.Size = new System.Drawing.Size(206, 29);
 			this.label_Title.TabIndex = 5;
 			this.label_Title.Text = "Welcome to μEncode!";
 			// 
@@ -106,7 +107,7 @@
 			this.radio_Decode.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.radio_Decode.Location = new System.Drawing.Point(140, 209);
 			this.radio_Decode.Name = "radio_Decode";
-			this.radio_Decode.Size = new System.Drawing.Size(76, 23);
+			this.radio_Decode.Size = new System.Drawing.Size(64, 17);
 			this.radio_Decode.TabIndex = 2;
 			this.radio_Decode.TabStop = true;
 			this.radio_Decode.Text = "Decode";
@@ -125,6 +126,7 @@
 			this.textbox_Input.Name = "textbox_Input";
 			this.textbox_Input.Size = new System.Drawing.Size(252, 100);
 			this.textbox_Input.TabIndex = 0;
+			this.textbox_Input.TextChanged += new System.EventHandler(this.textbox_Input_TextChanged);
 			// 
 			// label_Prompt
 			// 
@@ -210,7 +212,7 @@
             "AES Encryption"});
 			this.comboBox1.Location = new System.Drawing.Point(255, 186);
 			this.comboBox1.Name = "comboBox1";
-			this.comboBox1.Size = new System.Drawing.Size(136, 25);
+			this.comboBox1.Size = new System.Drawing.Size(136, 21);
 			this.comboBox1.TabIndex = 3;
 			this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
 			// 
@@ -222,7 +224,7 @@
 			this.link_ClearInput.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
 			this.link_ClearInput.Location = new System.Drawing.Point(140, 229);
 			this.link_ClearInput.Name = "link_ClearInput";
-			this.link_ClearInput.Size = new System.Drawing.Size(95, 23);
+			this.link_ClearInput.Size = new System.Drawing.Size(77, 19);
 			this.link_ClearInput.TabIndex = 12;
 			this.link_ClearInput.TabStop = true;
 			this.link_ClearInput.Text = "Clear Input";
@@ -247,7 +249,7 @@
 			this.textBox_Key.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
 			this.textBox_Key.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.textBox_Key.Cursor = System.Windows.Forms.Cursors.IBeam;
-			this.textBox_Key.Font = new System.Drawing.Font("NK57 Monospace Sc Bk", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.textBox_Key.Font = new System.Drawing.Font("NK57 Monospace Cd Bk", 6.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.textBox_Key.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
 			this.textBox_Key.Location = new System.Drawing.Point(140, 80);
 			this.textBox_Key.Multiline = true;
@@ -262,7 +264,7 @@
 			this.textBox_IV.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
 			this.textBox_IV.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.textBox_IV.Cursor = System.Windows.Forms.Cursors.IBeam;
-			this.textBox_IV.Font = new System.Drawing.Font("NK57 Monospace Sc Bk", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.textBox_IV.Font = new System.Drawing.Font("NK57 Monospace Cd Bk", 6.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.textBox_IV.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
 			this.textBox_IV.Location = new System.Drawing.Point(140, 156);
 			this.textBox_IV.Multiline = true;
@@ -284,12 +286,29 @@
 			this.label_IV.Visible = false;
 			this.label_IV.Click += new System.EventHandler(this.label_IV_Click);
 			// 
+			// label_ClearPair
+			// 
+			this.label_ClearPair.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+			this.label_ClearPair.AutoSize = true;
+			this.label_ClearPair.DisabledLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+			this.label_ClearPair.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+			this.label_ClearPair.Location = new System.Drawing.Point(136, 183);
+			this.label_ClearPair.Name = "label_ClearPair";
+			this.label_ClearPair.Size = new System.Drawing.Size(67, 19);
+			this.label_ClearPair.TabIndex = 17;
+			this.label_ClearPair.TabStop = true;
+			this.label_ClearPair.Text = "Clear Pair";
+			this.label_ClearPair.Visible = false;
+			this.label_ClearPair.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+			this.label_ClearPair.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.label_ClearPair_LinkClicked);
+			// 
 			// Main
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(16)))), ((int)(((byte)(16)))));
 			this.ClientSize = new System.Drawing.Size(404, 421);
+			this.Controls.Add(this.label_ClearPair);
 			this.Controls.Add(this.textBox_IV);
 			this.Controls.Add(this.label_IV);
 			this.Controls.Add(this.textBox_Key);
@@ -342,5 +361,6 @@
 		private TextBox textBox_Key;
 		private TextBox textBox_IV;
 		private Label label_IV;
+		private LinkLabel label_ClearPair;
 	}
 }
