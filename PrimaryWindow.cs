@@ -12,4 +12,24 @@ public partial class PrimaryWindow : Form
 	{
 		if (DrpDn_Mode.SelectedIndex == 3) GrpBx_AesOptions.Show(); else GrpBx_AesOptions.Hide();
 	}
+
+	private void TxtBx_Input_TextChanged(object sender, EventArgs e)
+	{
+
+	}
+
+	private void TxtBx_Output_TextChanged(object sender, EventArgs e)
+	{
+
+	}
+
+	private void TxtBx_AesKey_TextChanged(object sender, EventArgs e)
+	{
+
+	}
+
+	private void TxtBx_AesIV_TextChanged(object sender, EventArgs e)
+	{
+
+	}
 }
