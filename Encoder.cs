@@ -215,6 +215,17 @@ class Encoder
 		return inStr;
 	}
 
+	public static string MorseCode(string encIn, bool encode)
+	{
+		return MorseCode(encIn, encode, out bool error, out List<string> illegalChars);
+	}
+	public static string MorseCode(string encIn, bool encode, out bool error)
+	{
+		string result = MorseCode(encIn, encode, out bool e, out List<string> illegalChars);
+		error = e;
+		return result;
+	}
+
 	/// <summary>
 	/// Converts between Morse Code and plain text.
 	/// </summary>
@@ -222,8 +233,9 @@ class Encoder
 	/// <param name="error">Indicades whether or not an error has occured</param>
 	/// <param name="encode">Determines the mode of the encoder. True encodes, false decodes</param>
 	/// <returns></returns>
-	public static string MorseCode(string encIn, out bool error, bool encode)
+	public static string MorseCode(string encIn, bool encode, out bool error, out List<string> illegalChars)
 	{
+		illegalChars = new();
 		encIn = encIn.ToLower();
 		string encOut = "";
 		error = false;
@@ -247,6 +259,7 @@ class Encoder
 					{
 						// bypass this character, don't decode it
 						encOut += encIn[i] + " ";
+						illegalChars.Add("" + encIn[i]);
 						// let Main know that an error has occured
 						error = true;
 					}
@@ -285,9 +298,10 @@ class Encoder
 						else
 						{
 							encOut += currentChar + " ";
+							illegalChars.Add(currentChar);
+							// bypass this character, don't decode it
+							error = true;
 						}
-						// bypass this character, don't decode it
-						error = true;
 					}
 					encIn = encIn.Remove(0, encIn.IndexOf(' ') + 1);
 				}

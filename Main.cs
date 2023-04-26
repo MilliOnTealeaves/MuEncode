@@ -72,7 +72,7 @@ public partial class Main : Form
 					output = Encoder.CharShift(output, encode);
 				if (comboBox1.SelectedIndex == 2)
 					output = Encoder.MultiShift(output, encode);
-				output = Encoder.MorseCode(output, out bool invalidChar, encode);
+				output = Encoder.MorseCode(output, encode, out bool invalidChar);
 				if (invalidChar)
 					InvalidCharError();
 			}
@@ -109,7 +109,7 @@ public partial class Main : Form
 		{
 			if (comboBox1.SelectedIndex < 3)
 			{
-				output = Encoder.MorseCode(output, out bool invalidChar, encode);
+				output = Encoder.MorseCode(output, encode, out bool invalidChar);
 				if (comboBox1.SelectedIndex == 1)
 					output = Encoder.CharShift(output, encode);
 				if (comboBox1.SelectedIndex == 2)
