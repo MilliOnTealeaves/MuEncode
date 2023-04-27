@@ -3,12 +3,13 @@ using System.Security.Cryptography;
 namespace MuEncode;
 public partial class Main : Form
 {
-	public int Three;
+	public ErrorStream err;
 	public Main()
 	{
 		InitializeComponent();
 		Encoder.InitializeMorse();
 		WindowExpanded = false;
+		err = new ErrorStream(label_Note);
 	}
 
 	private void Form1_Load(object sender, EventArgs e)
@@ -61,78 +62,79 @@ public partial class Main : Form
 		{
 			label_Note.Text = "Please select a mode";
 		}
-
-		// if encode is checked
-		if (encode)
+		using (Encoder enc = new(err))
 		{
-			// morse code operations
-			if (comboBox1.SelectedIndex < 3)
+			// if encode is checked
+			if (encode)
 			{
-				if (comboBox1.SelectedIndex == 1)
-					output = Encoder.CharShift(output, encode);
-				if (comboBox1.SelectedIndex == 2)
-					output = Encoder.MultiShift(output, encode);
-				output = Encoder.MorseCode(output, encode, out bool invalidChar);
-				if (invalidChar)
-					InvalidCharError();
+				// morse code operations
+				if (comboBox1.SelectedIndex < 3)
+				{
+					if (comboBox1.SelectedIndex == 1)
+						output = enc.CharShift(output, encode);
+					if (comboBox1.SelectedIndex == 2)
+						output = enc.MultiShift(output, encode);
+					output = enc.MorseCode(output, encode, out bool invalidChar);
+					if (invalidChar)
+						InvalidCharError();
+				}
+				else
+				{
+					using Aes a = Aes.Create();
+					if (string.IsNullOrEmpty(textBox_IV.Text) || string.IsNullOrEmpty(textBox_Key.Text))
+					{
+						textBox_IV.Text = Convert.ToBase64String(a.IV);
+						textBox_Key.Text = Convert.ToBase64String(a.Key);
+					}
+					else
+					{
+						try
+						{
+							a.Key = Convert.FromBase64String(textBox_Key.Text);
+							a.IV = Convert.FromBase64String(textBox_IV.Text);
+						}
+						catch
+						{
+							label_Note.Text = "Key or IV invalid, new pair generated.";
+							textBox_IV.Text = Convert.ToBase64String(a.IV);
+							textBox_Key.Text = Convert.ToBase64String(a.Key);
+						}
+					}
+
+					output = enc.AES(output, a.Key, a.IV, encode);
+
+				}
+
 			}
+			// if decode is checked
 			else
 			{
-				using Aes a = Aes.Create();
-				if (string.IsNullOrEmpty(textBox_IV.Text) || string.IsNullOrEmpty(textBox_Key.Text))
+				if (comboBox1.SelectedIndex < 3)
 				{
-					textBox_IV.Text = Convert.ToBase64String(a.IV);
-					textBox_Key.Text = Convert.ToBase64String(a.Key);
+					output = enc.MorseCode(output, encode, out bool invalidChar);
+					if (comboBox1.SelectedIndex == 1)
+						output = enc.CharShift(output, encode);
+					if (comboBox1.SelectedIndex == 2)
+						output = enc.MultiShift(output, encode);
+					if (invalidChar)
+						InvalidCharError();
 				}
 				else
 				{
 					try
 					{
-						a.Key = Convert.FromBase64String(textBox_Key.Text);
-						a.IV = Convert.FromBase64String(textBox_IV.Text);
+						byte[] key = Convert.FromBase64String(textBox_Key.Text);
+						byte[] IV = Convert.FromBase64String(textBox_IV.Text);
+						output = enc.AES(output, key, IV, encode);
 					}
-					catch
+					catch (FormatException)
 					{
-						label_Note.Text = "Key or IV invalid, new pair generated.";
-						textBox_IV.Text = Convert.ToBase64String(a.IV);
-						textBox_Key.Text = Convert.ToBase64String(a.Key);
+						label_Note.Text = "Incorrect cipher";
+
 					}
 				}
-
-				output = Encoder.AES(output, a.Key, a.IV, encode);
-
-			}
-
-		}
-		// if decode is checked
-		else
-		{
-			if (comboBox1.SelectedIndex < 3)
-			{
-				output = Encoder.MorseCode(output, encode, out bool invalidChar);
-				if (comboBox1.SelectedIndex == 1)
-					output = Encoder.CharShift(output, encode);
-				if (comboBox1.SelectedIndex == 2)
-					output = Encoder.MultiShift(output, encode);
-				if (invalidChar)
-					InvalidCharError();
-			}
-			else
-			{
-				try
-				{
-					byte[] key = Convert.FromBase64String(textBox_Key.Text);
-					byte[] IV = Convert.FromBase64String(textBox_IV.Text);
-					output = Encoder.AES(output, key, IV, encode);
-				}
-				catch (FormatException)
-				{
-					label_Note.Text = "Incorrect cipher";
-
-				}
 			}
 		}
-
 		textbox_Output.Text = output;
 		if (checkBox_Clip.Checked)
 			Clipboard.SetText(textbox_Output.Text);

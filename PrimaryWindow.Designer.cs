@@ -49,6 +49,7 @@
 			this.Btn_Copy = new System.Windows.Forms.Button();
 			this.Btn_Save = new System.Windows.Forms.Button();
 			this.Pnl_Options = new System.Windows.Forms.Panel();
+			this.Btn_Run = new System.Windows.Forms.Button();
 			this.ChkBx_Copy = new System.Windows.Forms.CheckBox();
 			this.Pnl_AesWrapper = new System.Windows.Forms.Panel();
 			this.SplitContainer_Aes = new System.Windows.Forms.SplitContainer();
@@ -57,7 +58,6 @@
 			this.TxtBx_AesIV = new System.Windows.Forms.TextBox();
 			this.Lbl_AesIV = new System.Windows.Forms.Label();
 			this.Lbl_AesOptions = new System.Windows.Forms.Label();
-			this.Btn_Run = new System.Windows.Forms.Button();
 			this.DrpDn_Mode = new System.Windows.Forms.ComboBox();
 			this.Rdo_Decode = new System.Windows.Forms.RadioButton();
 			this.Rdo_Encode = new System.Windows.Forms.RadioButton();
@@ -128,6 +128,7 @@
 			this.Lbl_Errors.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.Lbl_Errors.AutoEllipsis = true;
 			this.Lbl_Errors.Font = new System.Drawing.Font("Segoe UI Variable Small", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.Lbl_Errors.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(249)))), ((int)(((byte)(215)))));
 			this.Lbl_Errors.Location = new System.Drawing.Point(54, 6);
@@ -167,7 +168,7 @@
 			this.Btn_ClearOutput.Margin = new System.Windows.Forms.Padding(4);
 			this.Btn_ClearOutput.Name = "Btn_ClearOutput";
 			this.Btn_ClearOutput.Size = new System.Drawing.Size(62, 30);
-			this.Btn_ClearOutput.TabIndex = 1;
+			this.Btn_ClearOutput.TabIndex = 2;
 			this.Btn_ClearOutput.Text = "Clear";
 			this.Btn_ClearOutput.UseVisualStyleBackColor = false;
 			this.Btn_ClearOutput.Click += new System.EventHandler(this.Btn_ClearOutput_Click);
@@ -278,10 +279,11 @@
 			this.Btn_Paste.Margin = new System.Windows.Forms.Padding(4);
 			this.Btn_Paste.Name = "Btn_Paste";
 			this.Btn_Paste.Size = new System.Drawing.Size(62, 30);
-			this.Btn_Paste.TabIndex = 3;
+			this.Btn_Paste.TabIndex = 0;
 			this.Btn_Paste.Text = "Paste";
 			this.Btn_Paste.UseMnemonic = false;
 			this.Btn_Paste.UseVisualStyleBackColor = false;
+			this.Btn_Paste.Click += new System.EventHandler(this.Btn_Paste_Click);
 			// 
 			// Btn_Open
 			// 
@@ -308,7 +310,7 @@
 			this.Pnl_OutputWrapper.Margin = new System.Windows.Forms.Padding(4);
 			this.Pnl_OutputWrapper.Name = "Pnl_OutputWrapper";
 			this.Pnl_OutputWrapper.Size = new System.Drawing.Size(915, 236);
-			this.Pnl_OutputWrapper.TabIndex = 8;
+			this.Pnl_OutputWrapper.TabIndex = 1;
 			// 
 			// TxtBx_Output
 			// 
@@ -337,7 +339,7 @@
 			this.Pnl_OutputHeader.Margin = new System.Windows.Forms.Padding(4);
 			this.Pnl_OutputHeader.Name = "Pnl_OutputHeader";
 			this.Pnl_OutputHeader.Size = new System.Drawing.Size(915, 42);
-			this.Pnl_OutputHeader.TabIndex = 1;
+			this.Pnl_OutputHeader.TabIndex = 0;
 			// 
 			// Btn_Copy
 			// 
@@ -351,10 +353,11 @@
 			this.Btn_Copy.Margin = new System.Windows.Forms.Padding(4);
 			this.Btn_Copy.Name = "Btn_Copy";
 			this.Btn_Copy.Size = new System.Drawing.Size(62, 30);
-			this.Btn_Copy.TabIndex = 4;
+			this.Btn_Copy.TabIndex = 0;
 			this.Btn_Copy.Text = "Copy";
 			this.Btn_Copy.UseMnemonic = false;
 			this.Btn_Copy.UseVisualStyleBackColor = false;
+			this.Btn_Copy.Click += new System.EventHandler(this.Btn_Copy_Click);
 			// 
 			// Btn_Save
 			// 
@@ -368,16 +371,16 @@
 			this.Btn_Save.Margin = new System.Windows.Forms.Padding(4);
 			this.Btn_Save.Name = "Btn_Save";
 			this.Btn_Save.Size = new System.Drawing.Size(125, 30);
-			this.Btn_Save.TabIndex = 0;
+			this.Btn_Save.TabIndex = 1;
 			this.Btn_Save.Text = "Save to File";
 			this.Btn_Save.UseVisualStyleBackColor = false;
 			// 
 			// Pnl_Options
 			// 
 			this.Pnl_Options.BackColor = System.Drawing.SystemColors.Window;
+			this.Pnl_Options.Controls.Add(this.Btn_Run);
 			this.Pnl_Options.Controls.Add(this.ChkBx_Copy);
 			this.Pnl_Options.Controls.Add(this.Pnl_AesWrapper);
-			this.Pnl_Options.Controls.Add(this.Btn_Run);
 			this.Pnl_Options.Controls.Add(this.DrpDn_Mode);
 			this.Pnl_Options.Controls.Add(this.Rdo_Decode);
 			this.Pnl_Options.Controls.Add(this.Rdo_Encode);
@@ -389,6 +392,25 @@
 			this.Pnl_Options.Size = new System.Drawing.Size(250, 556);
 			this.Pnl_Options.TabIndex = 7;
 			// 
+			// Btn_Run
+			// 
+			this.Btn_Run.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.Btn_Run.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(249)))), ((int)(((byte)(215)))));
+			this.Btn_Run.FlatAppearance.BorderColor = System.Drawing.Color.DarkSlateGray;
+			this.Btn_Run.FlatAppearance.BorderSize = 3;
+			this.Btn_Run.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.Btn_Run.Font = new System.Drawing.Font("Segoe UI Variable Text Semibold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.Btn_Run.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(49)))), ((int)(((byte)(54)))));
+			this.Btn_Run.Location = new System.Drawing.Point(8, 501);
+			this.Btn_Run.Margin = new System.Windows.Forms.Padding(4, 4, 4, 8);
+			this.Btn_Run.Name = "Btn_Run";
+			this.Btn_Run.Size = new System.Drawing.Size(235, 44);
+			this.Btn_Run.TabIndex = 6;
+			this.Btn_Run.Text = "Run";
+			this.Btn_Run.UseVisualStyleBackColor = false;
+			this.Btn_Run.Click += new System.EventHandler(this.Btn_Run_Click);
+			// 
 			// ChkBx_Copy
 			// 
 			this.ChkBx_Copy.AutoSize = true;
@@ -397,7 +419,7 @@
 			this.ChkBx_Copy.Location = new System.Drawing.Point(11, 119);
 			this.ChkBx_Copy.Name = "ChkBx_Copy";
 			this.ChkBx_Copy.Size = new System.Drawing.Size(227, 23);
-			this.ChkBx_Copy.TabIndex = 8;
+			this.ChkBx_Copy.TabIndex = 2;
 			this.ChkBx_Copy.Text = "Copy to clipboard when done";
 			this.ChkBx_Copy.UseVisualStyleBackColor = true;
 			// 
@@ -444,7 +466,7 @@
 			this.TxtBx_AesKey.Multiline = true;
 			this.TxtBx_AesKey.Name = "TxtBx_AesKey";
 			this.TxtBx_AesKey.Size = new System.Drawing.Size(234, 67);
-			this.TxtBx_AesKey.TabIndex = 3;
+			this.TxtBx_AesKey.TabIndex = 4;
 			// 
 			// Lbl_AesKey
 			// 
@@ -468,7 +490,7 @@
 			this.TxtBx_AesIV.Multiline = true;
 			this.TxtBx_AesIV.Name = "TxtBx_AesIV";
 			this.TxtBx_AesIV.Size = new System.Drawing.Size(234, 65);
-			this.TxtBx_AesIV.TabIndex = 3;
+			this.TxtBx_AesIV.TabIndex = 5;
 			// 
 			// Lbl_AesIV
 			// 
@@ -493,25 +515,6 @@
 			this.Lbl_AesOptions.TabIndex = 0;
 			this.Lbl_AesOptions.Text = "AES Options";
 			this.Lbl_AesOptions.Click += new System.EventHandler(this.Lbl_AesOptions_Click);
-			// 
-			// Btn_Run
-			// 
-			this.Btn_Run.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.Btn_Run.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(249)))), ((int)(((byte)(215)))));
-			this.Btn_Run.FlatAppearance.BorderColor = System.Drawing.Color.DarkSlateGray;
-			this.Btn_Run.FlatAppearance.BorderSize = 3;
-			this.Btn_Run.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.Btn_Run.Font = new System.Drawing.Font("Segoe UI Variable Text Semibold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-			this.Btn_Run.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(49)))), ((int)(((byte)(54)))));
-			this.Btn_Run.Location = new System.Drawing.Point(8, 501);
-			this.Btn_Run.Margin = new System.Windows.Forms.Padding(4, 4, 4, 8);
-			this.Btn_Run.Name = "Btn_Run";
-			this.Btn_Run.Size = new System.Drawing.Size(235, 44);
-			this.Btn_Run.TabIndex = 5;
-			this.Btn_Run.Text = "Run";
-			this.Btn_Run.UseVisualStyleBackColor = false;
-			this.Btn_Run.Click += new System.EventHandler(this.Btn_Run_Click);
 			// 
 			// DrpDn_Mode
 			// 
@@ -544,7 +547,7 @@
 			this.Rdo_Decode.Margin = new System.Windows.Forms.Padding(8, 0, 8, 8);
 			this.Rdo_Decode.Name = "Rdo_Decode";
 			this.Rdo_Decode.Size = new System.Drawing.Size(81, 23);
-			this.Rdo_Decode.TabIndex = 2;
+			this.Rdo_Decode.TabIndex = 1;
 			this.Rdo_Decode.Text = "Decode";
 			this.Rdo_Decode.UseVisualStyleBackColor = true;
 			// 
@@ -558,7 +561,7 @@
 			this.Rdo_Encode.Margin = new System.Windows.Forms.Padding(8, 8, 8, 4);
 			this.Rdo_Encode.Name = "Rdo_Encode";
 			this.Rdo_Encode.Size = new System.Drawing.Size(78, 23);
-			this.Rdo_Encode.TabIndex = 1;
+			this.Rdo_Encode.TabIndex = 0;
 			this.Rdo_Encode.TabStop = true;
 			this.Rdo_Encode.Text = "Encode";
 			this.Rdo_Encode.UseVisualStyleBackColor = true;

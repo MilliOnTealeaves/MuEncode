@@ -1,23 +1,29 @@
 using System.Security.Cryptography;
 
 namespace MuEncode;
-class Encoder
+class Encoder : IDisposable
 {
+	void IDisposable.Dispose() { }
+
+	private ErrorStream _errorStream;
+
+	public Encoder(ErrorStream e) { _errorStream = e; }
+
 	/// <summary>
 	/// Dictionary with alphanumeric characters mapped to morse code
 	/// </summary>
-	public static Dictionary<char, string> MorseF = new();
+	private static Dictionary<char, string> _morseF = new();
 
 	/// <summary>
 	/// Dictionary with morse code mapped to alphanumeric characters.
 	/// Reverse of <c>MorseF</c>
 	/// </summary>
-	public static Dictionary<string, char> MorseT = new();
+	private static Dictionary<string, char> _morseT = new();
 
 	/// <summary>
 	/// List of available characters, filled using MorseF
 	/// </summary>
-	public static string aChr = "";
+	private static string _aChr = "";
 
 
 	/// <summary>
@@ -28,75 +34,75 @@ class Encoder
 	{
 		// Fill Morse dictionary
 		// SPACE
-		MorseF.Add(' ', "/");
+		_morseF.Add(' ', "/");
 
 		// LETTERS
-		MorseF.Add('a', ".-");
-		MorseF.Add('b', "-...");
-		MorseF.Add('c', "-.-.");
-		MorseF.Add('d', "-..");
-		MorseF.Add('e', ".");
-		MorseF.Add('f', "..-.");
-		MorseF.Add('g', "--.");
-		MorseF.Add('h', "....");
-		MorseF.Add('i', "..");
-		MorseF.Add('j', ".---");
-		MorseF.Add('k', "-.-");
-		MorseF.Add('l', ".-..");
-		MorseF.Add('m', "--");
-		MorseF.Add('n', "-.");
-		MorseF.Add('o', "---");
-		MorseF.Add('p', ".--.");
-		MorseF.Add('q', "--.-");
-		MorseF.Add('r', ".-.");
-		MorseF.Add('s', "...");
-		MorseF.Add('t', "-");
-		MorseF.Add('u', "..-");
-		MorseF.Add('v', "...-");
-		MorseF.Add('w', ".--");
-		MorseF.Add('x', "-..-");
-		MorseF.Add('y', "-.--");
-		MorseF.Add('z', "--..");
+		_morseF.Add('a', ".-");
+		_morseF.Add('b', "-...");
+		_morseF.Add('c', "-.-.");
+		_morseF.Add('d', "-..");
+		_morseF.Add('e', ".");
+		_morseF.Add('f', "..-.");
+		_morseF.Add('g', "--.");
+		_morseF.Add('h', "....");
+		_morseF.Add('i', "..");
+		_morseF.Add('j', ".---");
+		_morseF.Add('k', "-.-");
+		_morseF.Add('l', ".-..");
+		_morseF.Add('m', "--");
+		_morseF.Add('n', "-.");
+		_morseF.Add('o', "---");
+		_morseF.Add('p', ".--.");
+		_morseF.Add('q', "--.-");
+		_morseF.Add('r', ".-.");
+		_morseF.Add('s', "...");
+		_morseF.Add('t', "-");
+		_morseF.Add('u', "..-");
+		_morseF.Add('v', "...-");
+		_morseF.Add('w', ".--");
+		_morseF.Add('x', "-..-");
+		_morseF.Add('y', "-.--");
+		_morseF.Add('z', "--..");
 
 		// NUMBERS
-		MorseF.Add('1', ".----");
-		MorseF.Add('2', "..---");
-		MorseF.Add('3', "...--");
-		MorseF.Add('4', "....-");
-		MorseF.Add('5', ".....");
-		MorseF.Add('6', "-....");
-		MorseF.Add('7', "--...");
-		MorseF.Add('8', "---..");
-		MorseF.Add('9', "----.");
-		MorseF.Add('0', "-----");
+		_morseF.Add('1', ".----");
+		_morseF.Add('2', "..---");
+		_morseF.Add('3', "...--");
+		_morseF.Add('4', "....-");
+		_morseF.Add('5', ".....");
+		_morseF.Add('6', "-....");
+		_morseF.Add('7', "--...");
+		_morseF.Add('8', "---..");
+		_morseF.Add('9', "----.");
+		_morseF.Add('0', "-----");
 
 		// PUNCTUATION
-		MorseF.Add('.', ".-.-.-");
-		MorseF.Add(',', "--..--");
-		MorseF.Add('?', "..--..");
-		MorseF.Add('\'', ".----.");
-		MorseF.Add('!', "-.-.--");
-		MorseF.Add('/', "-..-.");
-		MorseF.Add('(', "-.--.");
-		MorseF.Add(')', "-.--.-");
-		MorseF.Add('&', ".-...");
-		MorseF.Add(':', "---...");
-		MorseF.Add(';', "-.-.-.");
-		MorseF.Add('=', "-...-");
-		MorseF.Add('+', ".-.-.");
-		MorseF.Add('-', "-....-");
-		MorseF.Add('_', "..--.-");
-		MorseF.Add('\"', ".-..-.");
-		MorseF.Add('$', "...-..-");
-		MorseF.Add('@', ".--.-.");
+		_morseF.Add('.', ".-.-.-");
+		_morseF.Add(',', "--..--");
+		_morseF.Add('?', "..--..");
+		_morseF.Add('\'', ".----.");
+		_morseF.Add('!', "-.-.--");
+		_morseF.Add('/', "-..-.");
+		_morseF.Add('(', "-.--.");
+		_morseF.Add(')', "-.--.-");
+		_morseF.Add('&', ".-...");
+		_morseF.Add(':', "---...");
+		_morseF.Add(';', "-.-.-.");
+		_morseF.Add('=', "-...-");
+		_morseF.Add('+', ".-.-.");
+		_morseF.Add('-', "-....-");
+		_morseF.Add('_', "..--.-");
+		_morseF.Add('\"', ".-..-.");
+		_morseF.Add('$', "...-..-");
+		_morseF.Add('@', ".--.-.");
 
 		// Fill reverse dictionary (MorseT) and AvailableChars list
 		// Add opposite key-value pair for each existing in MorseF
 		// Add encodable keys to list of total available keys
-		foreach (KeyValuePair<char, string> kvp in MorseF)
+		foreach (KeyValuePair<char, string> kvp in _morseF)
 		{
-			MorseT.Add(kvp.Value, kvp.Key);
-			aChr += kvp.Key;
+			_morseT.Add(kvp.Value, kvp.Key);
+			_aChr += kvp.Key;
 		}
 	}
 
@@ -143,7 +149,7 @@ class Encoder
 		return output;
 	}
 
-	public static string AES(string inStr, byte[] key, byte[] IV, bool encode)
+	public string AES(string inStr, byte[] key, byte[] IV, bool encode)
 	{
 		if (encode)
 		{
@@ -155,7 +161,7 @@ class Encoder
 		}
 	}
 
-	public static string CharShift(string inStr, bool encode)
+	public string CharShift(string inStr, bool encode)
 	{
 		char[] input = inStr.ToLower().ToCharArray();
 		int charIndex;
@@ -163,7 +169,7 @@ class Encoder
 		if (encode)
 		{
 			Random rand = new();
-			s = rand.Next(1, aChr.Length);
+			s = rand.Next(1, _aChr.Length);
 		}
 		else
 		{
@@ -178,14 +184,14 @@ class Encoder
 		}
 		for (int i = 0; i < input.Length; i++)
 		{
-			if (aChr.IndexOf(input[i]) != -1)
+			if (_aChr.IndexOf(input[i]) != -1)
 			{
-				charIndex = aChr.IndexOf(input[i]) + s;
-				if (aChr.IndexOf(input[i]) + s >= aChr.Length)
-					charIndex -= aChr.Length;
-				if (aChr.IndexOf(input[i]) + s < 0)
-					charIndex += aChr.Length;
-				input[i] = aChr[charIndex];
+				charIndex = _aChr.IndexOf(input[i]) + s;
+				if (_aChr.IndexOf(input[i]) + s >= _aChr.Length)
+					charIndex -= _aChr.Length;
+				if (_aChr.IndexOf(input[i]) + s < 0)
+					charIndex += _aChr.Length;
+				input[i] = _aChr[charIndex];
 			}
 		}
 		inStr = "";
@@ -206,7 +212,7 @@ class Encoder
 		}
 	}
 
-	public static string MultiShift(string inStr, bool encode)
+	public string MultiShift(string inStr, bool encode)
 	{
 		for (int i = 0; i < 5; i++)
 		{
@@ -215,15 +221,9 @@ class Encoder
 		return inStr;
 	}
 
-	public static string MorseCode(string encIn, bool encode)
+	public string MorseCode(string encIn, bool encode)
 	{
-		return MorseCode(encIn, encode, out bool error, out List<string> illegalChars);
-	}
-	public static string MorseCode(string encIn, bool encode, out bool error)
-	{
-		string result = MorseCode(encIn, encode, out bool e, out List<string> illegalChars);
-		error = e;
-		return result;
+		return MorseCode(encIn, encode, out _);
 	}
 
 	/// <summary>
@@ -233,9 +233,9 @@ class Encoder
 	/// <param name="error">Indicades whether or not an error has occured</param>
 	/// <param name="encode">Determines the mode of the encoder. True encodes, false decodes</param>
 	/// <returns></returns>
-	public static string MorseCode(string encIn, bool encode, out bool error, out List<string> illegalChars)
+	public string MorseCode(string encIn, bool encode, out bool error)
 	{
-		illegalChars = new();
+		List<string> illegalChars = new();
 		encIn = encIn.ToLower();
 		string encOut = "";
 		error = false;
@@ -247,7 +247,7 @@ class Encoder
 			{
 				try
 				{
-					encOut += MorseF[encIn[i]] + " ";
+					encOut += _morseF[encIn[i]] + " ";
 				}
 				catch (KeyNotFoundException)
 				{
@@ -287,7 +287,7 @@ class Encoder
 					currentChar = encIn[..encIn.IndexOf(' ')];
 					try
 					{
-						encOut += MorseT[currentChar];
+						encOut += _morseT[currentChar];
 					}
 					catch (KeyNotFoundException)
 					{
@@ -313,6 +313,7 @@ class Encoder
 			}
 		}
 
+		if (error == true) _errorStream.Write(new IllegalCharacterError(illegalChars));
 		return encOut;
 	}
 }

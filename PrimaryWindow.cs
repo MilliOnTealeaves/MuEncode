@@ -4,10 +4,14 @@ namespace MuEncode;
 
 public partial class PrimaryWindow : Form
 {
+	private ErrorStream err;
+
 	public PrimaryWindow()
 	{
 		InitializeComponent();
 		Encoder.InitializeMorse();
+		err = new(Lbl_Errors, true);
+		err.Write("Error Stream. Double-click to clear errors");
 		AesWrapperHeight = Pnl_AesWrapper.Height;
 	}
 
@@ -20,87 +24,82 @@ public partial class PrimaryWindow : Form
 	{
 		if (TxtBx_Input.Text == "")
 		{
-			Lbl_Errors.Text += "\t\tInput is empty, try again\n";
+			err.Write("Input is empty, try again");
 			return;
 		}
 
 		bool encode = Rdo_Encode.Checked;
 		string result = TxtBx_Input.Text;
 		int mode = DrpDn_Mode.SelectedIndex;
-
-		if (encode)
+		using (Encoder enc = new(err))
 		{
-			switch (mode)
+			if (encode)
 			{
-				case 1: result = Encoder.CharShift(result, encode); break;
-				case 2: result = Encoder.MultiShift(result, encode); break;
-			}
-			if (mode != 3)
-			{
-				result = Encoder.MorseCode(result, encode, out bool charError, out List<string> illegalChars);
-				if (charError) Lbl_Errors.Text += "Encountered Illegal Characters: ";
-				foreach (string i in illegalChars)
-					Lbl_Errors.Text += "[" + i + "], ";
-				Lbl_Errors.Text += "\n";
-			}
-			else
-			{
-				using Aes a = Aes.Create();
-				if (string.IsNullOrEmpty(TxtBx_AesIV.Text) || string.IsNullOrEmpty(TxtBx_AesKey.Text))
+				switch (mode)
 				{
-					TxtBx_AesIV.Text = Convert.ToBase64String(a.IV);
-					TxtBx_AesKey.Text = Convert.ToBase64String(a.Key);
+					case 1: result = enc.CharShift(result, encode); break;
+					case 2: result = enc.MultiShift(result, encode); break;
+				}
+				if (mode != 3)
+				{
+					result = enc.MorseCode(result, encode, out bool charError);
+
+					if (mode == -1) DrpDn_Mode.SelectedIndex = 0;
 				}
 				else
 				{
-					try
+					using Aes a = Aes.Create();
+					if (string.IsNullOrEmpty(TxtBx_AesIV.Text) || string.IsNullOrEmpty(TxtBx_AesKey.Text))
 					{
-						a.Key = Convert.FromBase64String(TxtBx_AesKey.Text);
-						a.IV = Convert.FromBase64String(TxtBx_AesIV.Text);
-					}
-					catch
-					{
-						Lbl_Errors.Text = "Key or IV invalid, new pair generated.";
 						TxtBx_AesIV.Text = Convert.ToBase64String(a.IV);
 						TxtBx_AesKey.Text = Convert.ToBase64String(a.Key);
 					}
+					else
+					{
+						try
+						{
+							a.Key = Convert.FromBase64String(TxtBx_AesKey.Text);
+							a.IV = Convert.FromBase64String(TxtBx_AesIV.Text);
+						}
+						catch
+						{
+							err.Write("Key or IV invalid, new pair generated");
+							TxtBx_AesIV.Text = Convert.ToBase64String(a.IV);
+							TxtBx_AesKey.Text = Convert.ToBase64String(a.Key);
+						}
+					}
+
+					result = enc.AES(result, a.Key, a.IV, encode);
+				}
+			}
+			else
+			{
+				if (mode != 3)
+				{
+					result = enc.MorseCode(result, encode, out bool charError);
+					switch (mode)
+					{
+						case 1: result = enc.CharShift(result, encode); break;
+						case 2: result = enc.MultiShift(result, encode); break;
+					}
 				}
 
-				result = Encoder.AES(result, a.Key, a.IV, encode);
+				else if (!string.IsNullOrEmpty(TxtBx_AesIV.Text) && !string.IsNullOrEmpty(TxtBx_AesKey.Text))
+				{
+					try
+					{
+						byte[] key = Convert.FromBase64String(TxtBx_AesKey.Text);
+						byte[] IV = Convert.FromBase64String(TxtBx_AesIV.Text);
+						result = enc.AES(result, key, IV, encode);
+					}
+					catch (FormatException)
+					{
+						err.Write("Incorrect cipher");
+					}
+				}
 			}
 		}
-		else
-		{
-			if (mode != 3)
-			{
-				result = Encoder.MorseCode(result, encode, out bool charError, out List<string> illegalChars);
-				switch (mode)
-				{
-					case 1: result = Encoder.CharShift(result, encode); break;
-					case 2: result = Encoder.MultiShift(result, encode); break;
-				}
-				if (charError) Lbl_Errors.Text += "Encountered Illegal Characters: ";
-				foreach (string i in illegalChars)
-					Lbl_Errors.Text += "[" + i + "], ";
-				Lbl_Errors.Text += "\n";
-			}
-
-			else if (!string.IsNullOrEmpty(TxtBx_AesIV.Text) && !string.IsNullOrEmpty(TxtBx_AesKey.Text))
-			{
-				try
-				{
-					byte[] key = Convert.FromBase64String(TxtBx_AesKey.Text);
-					byte[] IV = Convert.FromBase64String(TxtBx_AesIV.Text);
-					result = Encoder.AES(result, key, IV, encode);
-				}
-				catch (FormatException)
-				{
-					Lbl_Errors.Text = "Incorrect cipher";
-				}
-			}
-			if (ChkBx_Copy.Checked) Clipboard.SetText(result);
-		}
-
+		if (ChkBx_Copy.Checked) Clipboard.SetText(result);
 		TxtBx_Output.Text = result;
 	}
 
@@ -139,5 +138,15 @@ public partial class PrimaryWindow : Form
 	private void Lbl_Errors_DoubleClick(object sender, EventArgs e)
 	{
 		Lbl_Errors.Text = "";
+	}
+
+	private void Btn_Paste_Click(object sender, EventArgs e)
+	{
+		TxtBx_Input.Text = Clipboard.GetText();
+	}
+
+	private void Btn_Copy_Click(object sender, EventArgs e)
+	{
+		Clipboard.SetText(TxtBx_Output.Text);
 	}
 }
