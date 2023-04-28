@@ -100,6 +100,12 @@ public partial class PrimaryWindow : Form
 			}
 		}
 		if (ChkBx_Copy.Checked) Clipboard.SetText(result);
+		if (ChkBx_Switch.Checked)
+		{
+			bool b = Rdo_Encode.Checked;
+			Rdo_Encode.Checked = !b;
+			Rdo_Decode.Checked = b;
+		}
 		TxtBx_Output.Text = result;
 	}
 
@@ -148,5 +154,30 @@ public partial class PrimaryWindow : Form
 	private void Btn_Copy_Click(object sender, EventArgs e)
 	{
 		Clipboard.SetText(TxtBx_Output.Text);
+	}
+
+	private void Pnl_AesWrapper_Paint(object sender, PaintEventArgs e)
+	{
+
+	}
+
+	private void Lbl_AesKey_Click(object sender, EventArgs e)
+	{
+
+	}
+
+	private void ChkBx_Switch_CheckedChanged(object sender, EventArgs e)
+	{
+
+	}
+
+	private void Rdo_Decode_CheckedChanged(object sender, EventArgs e)
+	{
+
+	}
+
+	private void Pnl_Options_Paint(object sender, PaintEventArgs e)
+	{
+
 	}
 }

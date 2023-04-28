@@ -49,6 +49,7 @@
 			this.Btn_Copy = new System.Windows.Forms.Button();
 			this.Btn_Save = new System.Windows.Forms.Button();
 			this.Pnl_Options = new System.Windows.Forms.Panel();
+			this.ChkBx_Switch = new System.Windows.Forms.CheckBox();
 			this.Btn_Run = new System.Windows.Forms.Button();
 			this.ChkBx_Copy = new System.Windows.Forms.CheckBox();
 			this.Pnl_AesWrapper = new System.Windows.Forms.Panel();
@@ -63,6 +64,7 @@
 			this.Rdo_Encode = new System.Windows.Forms.RadioButton();
 			this.Pnl_OptionsHeader = new System.Windows.Forms.Panel();
 			this.Lbl_Options = new System.Windows.Forms.Label();
+			this.Pnl_OptionsCommon = new System.Windows.Forms.Panel();
 			this.Pnl_Footer.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.Img_Logo)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.SplitContainer_Content)).BeginInit();
@@ -80,6 +82,7 @@
 			this.SplitContainer_Aes.Panel2.SuspendLayout();
 			this.SplitContainer_Aes.SuspendLayout();
 			this.Pnl_OptionsHeader.SuspendLayout();
+			this.Pnl_OptionsCommon.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// Pnl_Footer
@@ -378,12 +381,10 @@
 			// Pnl_Options
 			// 
 			this.Pnl_Options.BackColor = System.Drawing.SystemColors.Window;
+			this.Pnl_Options.Controls.Add(this.Pnl_OptionsCommon);
 			this.Pnl_Options.Controls.Add(this.Btn_Run);
-			this.Pnl_Options.Controls.Add(this.ChkBx_Copy);
 			this.Pnl_Options.Controls.Add(this.Pnl_AesWrapper);
 			this.Pnl_Options.Controls.Add(this.DrpDn_Mode);
-			this.Pnl_Options.Controls.Add(this.Rdo_Decode);
-			this.Pnl_Options.Controls.Add(this.Rdo_Encode);
 			this.Pnl_Options.Controls.Add(this.Pnl_OptionsHeader);
 			this.Pnl_Options.Dock = System.Windows.Forms.DockStyle.Right;
 			this.Pnl_Options.Location = new System.Drawing.Point(665, 0);
@@ -391,6 +392,21 @@
 			this.Pnl_Options.Name = "Pnl_Options";
 			this.Pnl_Options.Size = new System.Drawing.Size(250, 556);
 			this.Pnl_Options.TabIndex = 7;
+			this.Pnl_Options.Paint += new System.Windows.Forms.PaintEventHandler(this.Pnl_Options_Paint);
+			// 
+			// ChkBx_Switch
+			// 
+			this.ChkBx_Switch.AutoSize = true;
+			this.ChkBx_Switch.Font = new System.Drawing.Font("Segoe UI Variable Small", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+			this.ChkBx_Switch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(49)))), ((int)(((byte)(54)))));
+			this.ChkBx_Switch.Location = new System.Drawing.Point(4, 76);
+			this.ChkBx_Switch.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			this.ChkBx_Switch.Name = "ChkBx_Switch";
+			this.ChkBx_Switch.Size = new System.Drawing.Size(175, 23);
+			this.ChkBx_Switch.TabIndex = 3;
+			this.ChkBx_Switch.Text = "Switch mode after run";
+			this.ChkBx_Switch.UseVisualStyleBackColor = true;
+			this.ChkBx_Switch.CheckedChanged += new System.EventHandler(this.ChkBx_Switch_CheckedChanged);
 			// 
 			// Btn_Run
 			// 
@@ -402,11 +418,11 @@
 			this.Btn_Run.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.Btn_Run.Font = new System.Drawing.Font("Segoe UI Variable Text Semibold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.Btn_Run.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(49)))), ((int)(((byte)(54)))));
-			this.Btn_Run.Location = new System.Drawing.Point(8, 501);
+			this.Btn_Run.Location = new System.Drawing.Point(8, 500);
 			this.Btn_Run.Margin = new System.Windows.Forms.Padding(4, 4, 4, 8);
 			this.Btn_Run.Name = "Btn_Run";
-			this.Btn_Run.Size = new System.Drawing.Size(235, 44);
-			this.Btn_Run.TabIndex = 6;
+			this.Btn_Run.Size = new System.Drawing.Size(235, 43);
+			this.Btn_Run.TabIndex = 2;
 			this.Btn_Run.Text = "Run";
 			this.Btn_Run.UseVisualStyleBackColor = false;
 			this.Btn_Run.Click += new System.EventHandler(this.Btn_Run_Click);
@@ -416,22 +432,25 @@
 			this.ChkBx_Copy.AutoSize = true;
 			this.ChkBx_Copy.Font = new System.Drawing.Font("Segoe UI Variable Small", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.ChkBx_Copy.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(49)))), ((int)(((byte)(54)))));
-			this.ChkBx_Copy.Location = new System.Drawing.Point(11, 119);
+			this.ChkBx_Copy.Location = new System.Drawing.Point(4, 53);
+			this.ChkBx_Copy.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.ChkBx_Copy.Name = "ChkBx_Copy";
-			this.ChkBx_Copy.Size = new System.Drawing.Size(227, 23);
+			this.ChkBx_Copy.Size = new System.Drawing.Size(182, 23);
 			this.ChkBx_Copy.TabIndex = 2;
-			this.ChkBx_Copy.Text = "Copy to clipboard when done";
+			this.ChkBx_Copy.Text = "Copy result when done";
 			this.ChkBx_Copy.UseVisualStyleBackColor = true;
 			// 
 			// Pnl_AesWrapper
 			// 
 			this.Pnl_AesWrapper.Controls.Add(this.SplitContainer_Aes);
 			this.Pnl_AesWrapper.Controls.Add(this.Lbl_AesOptions);
-			this.Pnl_AesWrapper.Location = new System.Drawing.Point(8, 184);
+			this.Pnl_AesWrapper.Location = new System.Drawing.Point(5, 209);
+			this.Pnl_AesWrapper.Margin = new System.Windows.Forms.Padding(8);
 			this.Pnl_AesWrapper.Name = "Pnl_AesWrapper";
 			this.Pnl_AesWrapper.Size = new System.Drawing.Size(234, 200);
-			this.Pnl_AesWrapper.TabIndex = 7;
+			this.Pnl_AesWrapper.TabIndex = 3;
 			this.Pnl_AesWrapper.Visible = false;
+			this.Pnl_AesWrapper.Paint += new System.Windows.Forms.PaintEventHandler(this.Pnl_AesWrapper_Paint);
 			// 
 			// SplitContainer_Aes
 			// 
@@ -466,7 +485,7 @@
 			this.TxtBx_AesKey.Multiline = true;
 			this.TxtBx_AesKey.Name = "TxtBx_AesKey";
 			this.TxtBx_AesKey.Size = new System.Drawing.Size(234, 67);
-			this.TxtBx_AesKey.TabIndex = 4;
+			this.TxtBx_AesKey.TabIndex = 0;
 			// 
 			// Lbl_AesKey
 			// 
@@ -479,6 +498,7 @@
 			this.Lbl_AesKey.Size = new System.Drawing.Size(234, 19);
 			this.Lbl_AesKey.TabIndex = 2;
 			this.Lbl_AesKey.Text = "Key";
+			this.Lbl_AesKey.Click += new System.EventHandler(this.Lbl_AesKey_Click);
 			// 
 			// TxtBx_AesIV
 			// 
@@ -490,7 +510,7 @@
 			this.TxtBx_AesIV.Multiline = true;
 			this.TxtBx_AesIV.Name = "TxtBx_AesIV";
 			this.TxtBx_AesIV.Size = new System.Drawing.Size(234, 65);
-			this.TxtBx_AesIV.TabIndex = 5;
+			this.TxtBx_AesIV.TabIndex = 1;
 			// 
 			// Lbl_AesIV
 			// 
@@ -531,11 +551,11 @@
             "Random Shift",
             "Repeated Random Shift",
             "AES Encryption"});
-			this.DrpDn_Mode.Location = new System.Drawing.Point(8, 145);
-			this.DrpDn_Mode.Margin = new System.Windows.Forms.Padding(8, 0, 8, 8);
+			this.DrpDn_Mode.Location = new System.Drawing.Point(8, 168);
+			this.DrpDn_Mode.Margin = new System.Windows.Forms.Padding(8);
 			this.DrpDn_Mode.Name = "DrpDn_Mode";
-			this.DrpDn_Mode.Size = new System.Drawing.Size(234, 25);
-			this.DrpDn_Mode.TabIndex = 3;
+			this.DrpDn_Mode.Size = new System.Drawing.Size(235, 25);
+			this.DrpDn_Mode.TabIndex = 1;
 			this.DrpDn_Mode.SelectedIndexChanged += new System.EventHandler(this.DrpDn_Mode_Changed);
 			// 
 			// Rdo_Decode
@@ -543,13 +563,14 @@
 			this.Rdo_Decode.AutoSize = true;
 			this.Rdo_Decode.Font = new System.Drawing.Font("Segoe UI Variable Small", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.Rdo_Decode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(49)))), ((int)(((byte)(54)))));
-			this.Rdo_Decode.Location = new System.Drawing.Point(11, 85);
-			this.Rdo_Decode.Margin = new System.Windows.Forms.Padding(8, 0, 8, 8);
+			this.Rdo_Decode.Location = new System.Drawing.Point(4, 26);
+			this.Rdo_Decode.Margin = new System.Windows.Forms.Padding(4, 0, 4, 4);
 			this.Rdo_Decode.Name = "Rdo_Decode";
 			this.Rdo_Decode.Size = new System.Drawing.Size(81, 23);
 			this.Rdo_Decode.TabIndex = 1;
 			this.Rdo_Decode.Text = "Decode";
 			this.Rdo_Decode.UseVisualStyleBackColor = true;
+			this.Rdo_Decode.CheckedChanged += new System.EventHandler(this.Rdo_Decode_CheckedChanged);
 			// 
 			// Rdo_Encode
 			// 
@@ -557,8 +578,8 @@
 			this.Rdo_Encode.Checked = true;
 			this.Rdo_Encode.Font = new System.Drawing.Font("Segoe UI Variable Small", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.Rdo_Encode.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(49)))), ((int)(((byte)(54)))));
-			this.Rdo_Encode.Location = new System.Drawing.Point(11, 58);
-			this.Rdo_Encode.Margin = new System.Windows.Forms.Padding(8, 8, 8, 4);
+			this.Rdo_Encode.Location = new System.Drawing.Point(4, 3);
+			this.Rdo_Encode.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.Rdo_Encode.Name = "Rdo_Encode";
 			this.Rdo_Encode.Size = new System.Drawing.Size(78, 23);
 			this.Rdo_Encode.TabIndex = 0;
@@ -591,6 +612,19 @@
 			this.Lbl_Options.Text = "Options";
 			this.Lbl_Options.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
 			// 
+			// Pnl_OptionsCommon
+			// 
+			this.Pnl_OptionsCommon.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.Pnl_OptionsCommon.Controls.Add(this.ChkBx_Switch);
+			this.Pnl_OptionsCommon.Controls.Add(this.ChkBx_Copy);
+			this.Pnl_OptionsCommon.Controls.Add(this.Rdo_Decode);
+			this.Pnl_OptionsCommon.Controls.Add(this.Rdo_Encode);
+			this.Pnl_OptionsCommon.Location = new System.Drawing.Point(8, 49);
+			this.Pnl_OptionsCommon.Margin = new System.Windows.Forms.Padding(8);
+			this.Pnl_OptionsCommon.Name = "Pnl_OptionsCommon";
+			this.Pnl_OptionsCommon.Size = new System.Drawing.Size(235, 103);
+			this.Pnl_OptionsCommon.TabIndex = 0;
+			// 
 			// PrimaryWindow
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
@@ -618,7 +652,6 @@
 			this.Pnl_OutputWrapper.PerformLayout();
 			this.Pnl_OutputHeader.ResumeLayout(false);
 			this.Pnl_Options.ResumeLayout(false);
-			this.Pnl_Options.PerformLayout();
 			this.Pnl_AesWrapper.ResumeLayout(false);
 			this.SplitContainer_Aes.Panel1.ResumeLayout(false);
 			this.SplitContainer_Aes.Panel1.PerformLayout();
@@ -627,6 +660,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.SplitContainer_Aes)).EndInit();
 			this.SplitContainer_Aes.ResumeLayout(false);
 			this.Pnl_OptionsHeader.ResumeLayout(false);
+			this.Pnl_OptionsCommon.ResumeLayout(false);
+			this.Pnl_OptionsCommon.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -667,5 +702,7 @@
 		private Label Lbl_AesIV;
 		private Label Lbl_AesOptions;
 		private CheckBox ChkBx_Copy;
+		private CheckBox ChkBx_Switch;
+		private Panel Pnl_OptionsCommon;
 	}
 }
