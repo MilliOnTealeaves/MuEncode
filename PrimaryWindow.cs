@@ -129,7 +129,7 @@ public partial class PrimaryWindow : Form
 
 	private void Btn_Copy_Click(object sender, EventArgs e)
 	{
-		Clipboard.SetText(TxtBx_Output.Text);
+		if (!string.IsNullOrWhiteSpace(TxtBx_Output.Text)) Clipboard.SetText(TxtBx_Output.Text);
 	}
 
 	private void Btn_Paste_Click(object sender, EventArgs e)
@@ -168,7 +168,8 @@ public partial class PrimaryWindow : Form
 
 	private void Btn_Save_Click(object sender, EventArgs e)
 	{
-		SaveFile_Output.ShowDialog();
+		if (!string.IsNullOrWhiteSpace(TxtBx_Output.Text)) SaveFile_Output.ShowDialog();
+		else _err.Write("Output empty");
 	}
 
 	private void SaveFile_Output_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
@@ -177,7 +178,8 @@ public partial class PrimaryWindow : Form
 		{
 			using (StreamWriter sr = new(fs))
 			{
-				sr.Write(TxtBx_Output.Text);
+				if (!string.IsNullOrWhiteSpace(TxtBx_Output.Text))
+					sr.Write(TxtBx_Output.Text);
 				sr.Close();
 			}
 		}
