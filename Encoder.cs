@@ -3,7 +3,7 @@ using System.Security.Cryptography;
 namespace MuEncode;
 class Encoder : IDisposable
 {
-	void IDisposable.Dispose() { }
+	public void Dispose() { }
 
 	private ErrorStream _errorStream;
 

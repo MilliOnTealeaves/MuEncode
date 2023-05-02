@@ -19,10 +19,3 @@ Maybe:
 
 Very very maybe:
 - Public-private key encryption
-
-
-
-
-C O M P L E T E D ! ! !
-- Letter/character shift (should be pretty easy?
-	foreach loop with chararray or someting?
