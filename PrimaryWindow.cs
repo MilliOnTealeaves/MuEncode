@@ -1,3 +1,5 @@
+using System.Diagnostics;
+using System.Reflection;
 using System.Security.Cryptography;
 
 namespace MuEncode;
@@ -12,9 +14,10 @@ public partial class PrimaryWindow : Form
 		InitializeComponent();
 		Encoder.InitializeMorse();
 		_err = new(Lbl_Errors, false);
-		_err.Write("Error Stream. Double-click to clear errors");
+		_err.Write("Error and notice stream: double-click to clear. For help, press the logo");
 		AesWrapperHeight = Pnl_AesWrapper.Height;
-		_helpURL = "Help.html";
+		_helpURL = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\Help\\HelpPage.html";
+		ToolTip_Help.SetToolTip(Img_Logo, "Click for information about program");
 	}
 
 	#region Core Encoding Functionality
@@ -239,11 +242,8 @@ public partial class PrimaryWindow : Form
 
 	private void Img_Logo_Click(object sender, EventArgs e)
 	{
-		/* Process.Start(_helpURL);
-		 * 
-		 * do not implement until help page is finished <3
-		 */
-
+		try { Process.Start("C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe", _helpURL); }
+		catch (FileNotFoundException) { Process.Start("C:\\Program Files\\Internet Explorer\\iexplore.exe", _helpURL); }
 	}
 
 	private void Lbl_Errors_DoubleClick(object sender, EventArgs e)

@@ -29,6 +29,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PrimaryWindow));
 			this.Pnl_Footer = new System.Windows.Forms.Panel();
 			this.Lbl_Title = new System.Windows.Forms.Label();
@@ -68,6 +69,7 @@
 			this.Lbl_Options = new System.Windows.Forms.Label();
 			this.OpenFile_Input = new System.Windows.Forms.OpenFileDialog();
 			this.SaveFile_Output = new System.Windows.Forms.SaveFileDialog();
+			this.ToolTip_Help = new System.Windows.Forms.ToolTip(this.components);
 			this.Pnl_Footer.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.Img_Logo)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.SplitContainer_Content)).BeginInit();
@@ -615,6 +617,10 @@
 			this.SaveFile_Output.Title = "Save Output";
 			this.SaveFile_Output.FileOk += new System.ComponentModel.CancelEventHandler(this.SaveFile_Output_FileOk);
 			// 
+			// ToolTip_Help
+			// 
+			this.ToolTip_Help.AutomaticDelay = 200;
+			// 
 			// PrimaryWindow
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -623,6 +629,7 @@
 			this.Controls.Add(this.Pnl_Options);
 			this.Controls.Add(this.SplitContainer_Content);
 			this.Controls.Add(this.Pnl_Footer);
+			this.HelpButton = true;
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.MinimumSize = new System.Drawing.Size(450, 398);
@@ -696,5 +703,6 @@
 		private Panel Pnl_OptionsCommon;
 		private OpenFileDialog OpenFile_Input;
 		private SaveFileDialog SaveFile_Output;
+		private ToolTip ToolTip_Help;
 	}
 }
