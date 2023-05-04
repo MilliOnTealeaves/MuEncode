@@ -246,7 +246,7 @@ public partial class PrimaryWindow : Form
 
 	private void Img_Logo_Click(object sender, EventArgs e)
 	{
-		Process p = new() { StartInfo = new(_helpUrl) { UseShellExecute = true } };
+		Process p = new() { StartInfo = new(_exeUrl + _helpUrl) { UseShellExecute = true } };
 		p.Start();
 	}
 

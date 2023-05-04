@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "MuEncode"
-#define MyAppVersion "2.0"
+#define MyAppVersion "2.1"
 #define MyAppPublisher "MilliOnTealeaves"
 #define MyAppURL "https://github.com/MilliOnTealeaves/MuEncode/"
 #define MyAppExeName "MuEncode.exe"
@@ -22,7 +22,7 @@ DefaultDirName={autopf}\{#MyAppName}
 DisableProgramGroupPage=yes
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
-OutputBaseFilename=MuEncodeSetup_v2.0
+OutputBaseFilename=MuEncodeSetup_v2.1
 SetupIconFile="C:\Users\emila\OneDrive\Pictures\Saved Pictures\greenMu.ico"
 Compression=lzma
 SolidCompression=yes
@@ -40,9 +40,8 @@ Source: "C:\Users\emila\OneDrive\Documents\Programming\source\repos\MuEncode\bin
 Source: "C:\Users\emila\OneDrive\Documents\Programming\source\repos\MuEncode\bin\Release\net6.0-windows7.0\MuEncode.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\emila\OneDrive\Documents\Programming\source\repos\MuEncode\bin\Release\net6.0-windows7.0\MuEncode.pdb"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\emila\OneDrive\Documents\Programming\source\repos\MuEncode\bin\Release\net6.0-windows7.0\MuEncode.runtimeconfig.json"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\emila\OneDrive\Documents\Programming\source\repos\MuEncode\bin\Release\net6.0-windows7.0\System.IO.Pipelines.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\emila\OneDrive\Documents\Programming\source\repos\MuEncode\bin\Release\net6.0-windows7.0\Microsoft.AspNetCore.Http.Features.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\emila\OneDrive\Documents\Programming\source\repos\MuEncode\bin\Release\net6.0-windows7.0\Microsoft.Extensions.Primitives.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\emila\OneDrive\Documents\Programming\source\repos\MuEncode\bin\Release\net6.0-windows7.0\Help\HelpPage.html"; DestDir: "{app}\Help"; Flags: ignoreversion
+Source: "C:\Users\emila\OneDrive\Documents\Programming\source\repos\MuEncode\bin\Release\net6.0-windows7.0\Help\MainStyle.css"; DestDir: "{app}\Help"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
