@@ -7,7 +7,8 @@ namespace MuEncode;
 public partial class PrimaryWindow : Form
 {
 	private readonly ErrorStream _err;
-	private readonly string _helpURL;
+	private readonly string _helpUrl;
+	private readonly string? _exeUrl;
 
 	public PrimaryWindow()
 	{
@@ -16,7 +17,10 @@ public partial class PrimaryWindow : Form
 		_err = new(Lbl_Errors, false);
 		_err.Write("Error and notice stream: double-click to clear. For help, press the logo");
 		AesWrapperHeight = Pnl_AesWrapper.Height;
-		_helpURL = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\Help\\HelpPage.html";
+
+		_helpUrl = "\\Help\\HelpPage.html";
+		_exeUrl = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
 		ToolTip_Help.SetToolTip(Img_Logo, "Click for information about program");
 	}
 
@@ -242,8 +246,8 @@ public partial class PrimaryWindow : Form
 
 	private void Img_Logo_Click(object sender, EventArgs e)
 	{
-		try { Process.Start("C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe", _helpURL); }
-		catch (FileNotFoundException) { Process.Start("C:\\Program Files\\Internet Explorer\\iexplore.exe", _helpURL); }
+		Process p = new() { StartInfo = new(_helpUrl) { UseShellExecute = true } };
+		p.Start();
 	}
 
 	private void Lbl_Errors_DoubleClick(object sender, EventArgs e)
