@@ -631,6 +631,7 @@
 			this.Controls.Add(this.Pnl_Footer);
 			this.HelpButton = true;
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+			this.KeyPreview = true;
 			this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.MinimumSize = new System.Drawing.Size(450, 398);
 			this.Name = "PrimaryWindow";

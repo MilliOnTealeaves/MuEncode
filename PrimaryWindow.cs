@@ -22,6 +22,8 @@ public partial class PrimaryWindow : Form
 		_exeUrl = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
 		ToolTip_Help.SetToolTip(Img_Logo, "Click for information about program");
+
+		this.ActiveControl = TxtBx_Input;
 	}
 
 	#region Core Encoding Functionality
@@ -107,12 +109,7 @@ public partial class PrimaryWindow : Form
 
 		}
 		if (ChkBx_Copy.Checked) Clipboard.SetText(result);
-		if (ChkBx_Switch.Checked)
-		{
-			bool b = Rdo_Encode.Checked;
-			Rdo_Encode.Checked = !b;
-			Rdo_Decode.Checked = b;
-		}
+		if (ChkBx_Switch.Checked) SwitchMode();
 		TxtBx_Output.Text = result;
 	}
 
@@ -253,6 +250,13 @@ public partial class PrimaryWindow : Form
 	private void Lbl_Errors_DoubleClick(object sender, EventArgs e)
 	{
 		Lbl_Errors.Text = "";
+	}
+
+	private void SwitchMode()
+	{
+		bool b = Rdo_Encode.Checked;
+		Rdo_Encode.Checked = !b;
+		Rdo_Decode.Checked = b;
 	}
 
 	#endregion
