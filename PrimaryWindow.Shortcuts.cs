@@ -56,7 +56,7 @@ partial class PrimaryWindow : Form
 				Img_Logo_Click("CTRL+H", new());
 				return true;
 
-			case (Keys.Control | Keys.Escape):
+			case (Keys.Control | Keys.Tab):
 				Btn_ClearInput_Click("CTRL+Escape", new());
 				Btn_ClearOutput_Click("CTRL+Escape", new());
 				return true;

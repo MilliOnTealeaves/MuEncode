@@ -558,7 +558,7 @@
 			this.Lbl_AesOptions.Name = "Lbl_AesOptions";
 			this.Lbl_AesOptions.Size = new System.Drawing.Size(187, 20);
 			this.Lbl_AesOptions.TabIndex = 0;
-			this.Lbl_AesOptions.Text = "AES Options";
+			this.Lbl_AesOptions.Text = "AES Options [hide]";
 			this.Lbl_AesOptions.Click += new System.EventHandler(this.Lbl_AesOptions_Click);
 			// 
 			// DrpDn_Mode
