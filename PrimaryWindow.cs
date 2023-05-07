@@ -23,7 +23,7 @@ public partial class PrimaryWindow : Form
 
 		ToolTip_Help.SetToolTip(Img_Logo, "Click for information about program");
 
-		this.ActiveControl = TxtBx_Input;
+		ActiveControl = TxtBx_Input;
 	}
 
 	#region Core Encoding Functionality
@@ -200,10 +200,12 @@ public partial class PrimaryWindow : Form
 		if (Pnl_AesWrapper.Height > Pnl_AesWrapper.Font.Height + 2)
 		{
 			Pnl_AesWrapper.Height = Pnl_AesWrapper.Font.Height + 2;
+			Lbl_AesOptions.Text = "AES Options [show]";
 		}
 		else
 		{
 			Pnl_AesWrapper.Height = AesWrapperHeight;
+			Lbl_AesOptions.Text = "AES Options [hide]";
 		}
 	}
 
