@@ -3,108 +3,107 @@ using System.Security.Cryptography;
 namespace MuEncode;
 class Encoder : IDisposable
 {
-	public void Dispose() { }
-
 	private ErrorStream _errorStream;
-
-	public Encoder(ErrorStream e) { _errorStream = e; }
 
 	/// <summary>
 	/// Dictionary with alphanumeric characters mapped to morse code
 	/// </summary>
-	private static Dictionary<char, string> _morseF = new();
+	private Dictionary<char, string> _toMorse = new();
 
 	/// <summary>
 	/// Dictionary with morse code mapped to alphanumeric characters.
 	/// Reverse of <c>MorseF</c>
 	/// </summary>
-	private static Dictionary<string, char> _morseT = new();
+	private static Dictionary<string, char> _fromMorse = new();
 
-	/// <summary>
-	/// List of available characters, filled using MorseF
-	/// </summary>
-	private static string _aChr = "";
+	public Encoder(ErrorStream e)
+	{
+		_errorStream = e;
+		InitializeMorse();
+	}
 
+	public void Dispose() { }
 
 	/// <summary>
 	/// Adds data to the <c>MorseT</c> and <c>MorseF</c> dictionaries
 	/// </summary>
 	/// 
-	public static void InitializeMorse()
+	private void InitializeMorse()
 	{
 		// Fill Morse dictionary
 		// SPACE
-		_morseF.Add(' ', "/");
+		_toMorse.Add(' ', "/");
 
 		// LETTERS
-		_morseF.Add('a', ".-");
-		_morseF.Add('b', "-...");
-		_morseF.Add('c', "-.-.");
-		_morseF.Add('d', "-..");
-		_morseF.Add('e', ".");
-		_morseF.Add('f', "..-.");
-		_morseF.Add('g', "--.");
-		_morseF.Add('h', "....");
-		_morseF.Add('i', "..");
-		_morseF.Add('j', ".---");
-		_morseF.Add('k', "-.-");
-		_morseF.Add('l', ".-..");
-		_morseF.Add('m', "--");
-		_morseF.Add('n', "-.");
-		_morseF.Add('o', "---");
-		_morseF.Add('p', ".--.");
-		_morseF.Add('q', "--.-");
-		_morseF.Add('r', ".-.");
-		_morseF.Add('s', "...");
-		_morseF.Add('t', "-");
-		_morseF.Add('u', "..-");
-		_morseF.Add('v', "...-");
-		_morseF.Add('w', ".--");
-		_morseF.Add('x', "-..-");
-		_morseF.Add('y', "-.--");
-		_morseF.Add('z', "--..");
+		_toMorse.Add('a', ".-");
+		_toMorse.Add('b', "-...");
+		_toMorse.Add('c', "-.-.");
+		_toMorse.Add('d', "-..");
+		_toMorse.Add('e', ".");
+		_toMorse.Add('f', "..-.");
+		_toMorse.Add('g', "--.");
+		_toMorse.Add('h', "....");
+		_toMorse.Add('i', "..");
+		_toMorse.Add('j', ".---");
+		_toMorse.Add('k', "-.-");
+		_toMorse.Add('l', ".-..");
+		_toMorse.Add('m', "--");
+		_toMorse.Add('n', "-.");
+		_toMorse.Add('o', "---");
+		_toMorse.Add('p', ".--.");
+		_toMorse.Add('q', "--.-");
+		_toMorse.Add('r', ".-.");
+		_toMorse.Add('s', "...");
+		_toMorse.Add('t', "-");
+		_toMorse.Add('u', "..-");
+		_toMorse.Add('v', "...-");
+		_toMorse.Add('w', ".--");
+		_toMorse.Add('x', "-..-");
+		_toMorse.Add('y', "-.--");
+		_toMorse.Add('z', "--..");
 
 		// NUMBERS
-		_morseF.Add('1', ".----");
-		_morseF.Add('2', "..---");
-		_morseF.Add('3', "...--");
-		_morseF.Add('4', "....-");
-		_morseF.Add('5', ".....");
-		_morseF.Add('6', "-....");
-		_morseF.Add('7', "--...");
-		_morseF.Add('8', "---..");
-		_morseF.Add('9', "----.");
-		_morseF.Add('0', "-----");
+		_toMorse.Add('1', ".----");
+		_toMorse.Add('2', "..---");
+		_toMorse.Add('3', "...--");
+		_toMorse.Add('4', "....-");
+		_toMorse.Add('5', ".....");
+		_toMorse.Add('6', "-....");
+		_toMorse.Add('7', "--...");
+		_toMorse.Add('8', "---..");
+		_toMorse.Add('9', "----.");
+		_toMorse.Add('0', "-----");
 
 		// PUNCTUATION
-		_morseF.Add('.', ".-.-.-");
-		_morseF.Add(',', "--..--");
-		_morseF.Add('?', "..--..");
-		_morseF.Add('\'', ".----.");
-		_morseF.Add('!', "-.-.--");
-		_morseF.Add('/', "-..-.");
-		_morseF.Add('(', "-.--.");
-		_morseF.Add(')', "-.--.-");
-		_morseF.Add('&', ".-...");
-		_morseF.Add(':', "---...");
-		_morseF.Add(';', "-.-.-.");
-		_morseF.Add('=', "-...-");
-		_morseF.Add('+', ".-.-.");
-		_morseF.Add('-', "-....-");
-		_morseF.Add('_', "..--.-");
-		_morseF.Add('\"', ".-..-.");
-		_morseF.Add('$', "...-..-");
-		_morseF.Add('@', ".--.-.");
+		_toMorse.Add('.', ".-.-.-");
+		_toMorse.Add(',', "--..--");
+		_toMorse.Add('?', "..--..");
+		_toMorse.Add('\'', ".----.");
+		_toMorse.Add('!', "-.-.--");
+		_toMorse.Add('/', "-..-.");
+		_toMorse.Add('(', "-.--.");
+		_toMorse.Add(')', "-.--.-");
+		_toMorse.Add('&', ".-...");
+		_toMorse.Add(':', "---...");
+		_toMorse.Add(';', "-.-.-.");
+		_toMorse.Add('=', "-...-");
+		_toMorse.Add('+', ".-.-.");
+		_toMorse.Add('-', "-....-");
+		_toMorse.Add('_', "..--.-");
+		_toMorse.Add('\"', ".-..-.");
+		_toMorse.Add('$', "...-..-");
+		_toMorse.Add('@', ".--.-.");
 
 		// Fill reverse dictionary (MorseT) and AvailableChars list
 		// Add opposite key-value pair for each existing in MorseF
 		// Add encodable keys to list of total available keys
-		foreach (KeyValuePair<char, string> kvp in _morseF)
+		foreach (KeyValuePair<char, string> kvp in _toMorse)
 		{
-			_morseT.Add(kvp.Value, kvp.Key);
-			_aChr += kvp.Key;
+			_fromMorse.Add(kvp.Value, kvp.Key);
 		}
 	}
+
+	#region AES Methods
 
 	/// <summary>
 	/// Encrypts a string with AES encryption, given a key and IV.
@@ -161,6 +160,10 @@ class Encoder : IDisposable
 		}
 	}
 
+	#endregion
+
+	#region Morse Code Methods
+
 	public string CharShift(string inStr, bool encode)
 	{
 		char[] input = inStr.ToLower().ToCharArray();
@@ -169,7 +172,7 @@ class Encoder : IDisposable
 		if (encode)
 		{
 			Random rand = new();
-			s = rand.Next(1, _aChr.Length);
+			s = rand.Next(1, _toMorse.Count - 1);
 		}
 		else
 		{
@@ -182,16 +185,19 @@ class Encoder : IDisposable
 				s = 0;
 			}
 		}
+		List<char> keys = new(_toMorse.Keys);
+
 		for (int i = 0; i < input.Length; i++)
 		{
-			if (_aChr.IndexOf(input[i]) != -1)
+			if (keys.Contains(input[i]))
 			{
-				charIndex = _aChr.IndexOf(input[i]) + s;
-				if (_aChr.IndexOf(input[i]) + s >= _aChr.Length)
-					charIndex -= _aChr.Length;
-				if (_aChr.IndexOf(input[i]) + s < 0)
-					charIndex += _aChr.Length;
-				input[i] = _aChr[charIndex];
+				charIndex = keys.IndexOf(input[i]) + s;
+
+				if (keys.IndexOf(input[i]) + s >= keys.Count)
+					charIndex -= keys.Count;
+				if (keys.IndexOf(input[i]) + s < 0)
+					charIndex += keys.Count;
+				input[i] = keys[charIndex];
 			}
 		}
 		inStr = "";
@@ -221,17 +227,13 @@ class Encoder : IDisposable
 		return inStr;
 	}
 
-	public string MorseCode(string encIn, bool encode)
-	{
-		return MorseCode(encIn, encode, out _);
-	}
 
 	/// <summary>
 	/// Converts between Morse Code and plain text.
 	/// </summary>
 	/// <param name="encIn">Input</param>
-	/// <param name="error">Indicades whether or not an error has occured</param>
 	/// <param name="encode">Determines the mode of the encoder. True encodes, false decodes</param>
+	/// <param name="error">Indicades whether or not an error has occured</param>
 	/// <returns></returns>
 	public string MorseCode(string encIn, bool encode, out bool error)
 	{
@@ -247,7 +249,7 @@ class Encoder : IDisposable
 			{
 				try
 				{
-					encOut += _morseF[encIn[i]] + " ";
+					encOut += _toMorse[encIn[i]] + " ";
 				}
 				catch (KeyNotFoundException)
 				{
@@ -287,7 +289,7 @@ class Encoder : IDisposable
 					currentChar = encIn[..encIn.IndexOf(' ')];
 					try
 					{
-						encOut += _morseT[currentChar];
+						encOut += _fromMorse[currentChar];
 					}
 					catch (KeyNotFoundException)
 					{
@@ -316,4 +318,10 @@ class Encoder : IDisposable
 		if (error == true) _errorStream.Write(new IllegalCharacterError(illegalChars));
 		return encOut;
 	}
+	public string MorseCode(string encIn, bool encode)
+	{
+		return MorseCode(encIn, encode, out _);
+	}
+
+	#endregion
 }
