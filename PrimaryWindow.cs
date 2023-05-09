@@ -13,10 +13,9 @@ public partial class PrimaryWindow : Form
 	public PrimaryWindow()
 	{
 		InitializeComponent();
-		Encoder.InitializeMorse();
 		_err = new(Lbl_Errors, false);
 		_err.Write("Error and notice stream: double-click to clear. For help, press the logo");
-		AesWrapperHeight = Pnl_AesWrapper.Height;
+		_aesWrapperHeight = Pnl_AesWrapper.Height;
 
 		_helpUrl = "\\Help\\HelpPage.html";
 		_exeUrl = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -194,7 +193,7 @@ public partial class PrimaryWindow : Form
 
 	#region AES Panel Resize Methods
 
-	private int AesWrapperHeight;
+	private int _aesWrapperHeight;
 	private void Lbl_AesOptions_Click(object sender, EventArgs e)
 	{
 		if (Pnl_AesWrapper.Height > Pnl_AesWrapper.Font.Height + 2)
@@ -204,18 +203,18 @@ public partial class PrimaryWindow : Form
 		}
 		else
 		{
-			Pnl_AesWrapper.Height = AesWrapperHeight;
+			Pnl_AesWrapper.Height = _aesWrapperHeight;
 			Lbl_AesOptions.Text = "AES Options [hide]";
 		}
 	}
 
 	private void PrimaryWindow_ResizeEnd(object sender, EventArgs e)
 	{
-		if (Pnl_AesWrapper.Location.Y + AesWrapperHeight > Btn_Run.Location.Y)
+		if (Pnl_AesWrapper.Location.Y + _aesWrapperHeight > Btn_Run.Location.Y)
 		{
 			Pnl_AesWrapper.Height = Btn_Run.Location.Y - Pnl_AesWrapper.Location.Y - 5;
 		}
-		else Pnl_AesWrapper.Height = AesWrapperHeight;
+		else Pnl_AesWrapper.Height = _aesWrapperHeight;
 	}
 
 	private void DrpDn_Mode_Changed(object sender, EventArgs e)

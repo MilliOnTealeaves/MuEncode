@@ -53,27 +53,30 @@ partial class PrimaryWindow : Form
 
 			// open help page
 			case (Keys.Control | Keys.H):
+			case (Keys.F1):
 				Img_Logo_Click("CTRL+H", new());
 				return true;
 
+			// clear input and output
 			case (Keys.Control | Keys.Tab):
 				Btn_ClearInput_Click("CTRL+Escape", new());
 				Btn_ClearOutput_Click("CTRL+Escape", new());
 				return true;
 
-			case (Keys.Control | Keys.D0):
+			// select encoding type
+			case (Keys.Control | Keys.D1):
 				DrpDn_Mode.SelectedIndex = 0;
 				return true;
 
-			case (Keys.Control | Keys.D1):
+			case (Keys.Control | Keys.D2):
 				DrpDn_Mode.SelectedIndex = 1;
 				return true;
 
-			case (Keys.Control | Keys.D2):
+			case (Keys.Control | Keys.D3):
 				DrpDn_Mode.SelectedIndex = 2;
 				return true;
 
-			case (Keys.Control | Keys.D3):
+			case (Keys.Control | Keys.D4):
 				DrpDn_Mode.SelectedIndex = 3;
 				return true;
 
