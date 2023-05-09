@@ -7,7 +7,6 @@ public partial class Main : Form
 	public Main()
 	{
 		InitializeComponent();
-		Encoder.InitializeMorse();
 		WindowExpanded = false;
 		err = new ErrorStream(label_Note);
 	}

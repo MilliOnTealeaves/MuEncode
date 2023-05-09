@@ -13,7 +13,6 @@ public partial class PrimaryWindow : Form
 	public PrimaryWindow()
 	{
 		InitializeComponent();
-		Encoder.InitializeMorse();
 		_err = new(Lbl_Errors, false);
 		_err.Write("Error and notice stream: double-click to clear. For help, press the logo");
 		AesWrapperHeight = Pnl_AesWrapper.Height;
