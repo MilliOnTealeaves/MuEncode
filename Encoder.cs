@@ -8,7 +8,7 @@ class Encoder : IDisposable
 	/// <summary>
 	/// Dictionary with alphanumeric characters mapped to morse code
 	/// </summary>
-	private Dictionary<char, string> _toMorse = new();
+	private static Dictionary<char, string> _toMorse = new();
 
 	/// <summary>
 	/// Dictionary with morse code mapped to alphanumeric characters.
@@ -27,8 +27,8 @@ class Encoder : IDisposable
 	/// <summary>
 	/// Adds data to the <c>MorseT</c> and <c>MorseF</c> dictionaries
 	/// </summary>
-	/// 
-	private void InitializeMorse()
+	///
+	private static void InitializeMorse()
 	{
 		// Fill Morse dictionary
 		// SPACE
