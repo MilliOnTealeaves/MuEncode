@@ -19,6 +19,10 @@ class Encoder : IDisposable
 	public Encoder(ErrorStream e)
 	{
 		_errorStream = e;
+	}
+
+	static Encoder()
+	{
 		InitializeMorse();
 	}
 
