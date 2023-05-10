@@ -15,12 +15,14 @@ public partial class PrimaryWindow : Form
 		InitializeComponent();
 		_err = new(Lbl_Errors, false);
 		_err.Write("Error and notice stream: double-click to clear. For help, press the logo");
-		AesWrapperHeight = Pnl_AesWrapper.Height;
+		_aesWrapperHeight = Pnl_AesWrapper.Height;
 
 		_helpUrl = "\\Help\\HelpPage.html";
 		_exeUrl = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
 		ToolTip_Help.SetToolTip(Img_Logo, "Click for information about program");
+
+		ActiveControl = TxtBx_Input;
 	}
 
 	#region Core Encoding Functionality
@@ -106,12 +108,7 @@ public partial class PrimaryWindow : Form
 
 		}
 		if (ChkBx_Copy.Checked) Clipboard.SetText(result);
-		if (ChkBx_Switch.Checked)
-		{
-			bool b = Rdo_Encode.Checked;
-			Rdo_Encode.Checked = !b;
-			Rdo_Decode.Checked = b;
-		}
+		if (ChkBx_Switch.Checked) SwitchMode();
 		TxtBx_Output.Text = result;
 	}
 
@@ -196,26 +193,28 @@ public partial class PrimaryWindow : Form
 
 	#region AES Panel Resize Methods
 
-	private int AesWrapperHeight;
+	private int _aesWrapperHeight;
 	private void Lbl_AesOptions_Click(object sender, EventArgs e)
 	{
 		if (Pnl_AesWrapper.Height > Pnl_AesWrapper.Font.Height + 2)
 		{
 			Pnl_AesWrapper.Height = Pnl_AesWrapper.Font.Height + 2;
+			Lbl_AesOptions.Text = "AES Options [show]";
 		}
 		else
 		{
-			Pnl_AesWrapper.Height = AesWrapperHeight;
+			Pnl_AesWrapper.Height = _aesWrapperHeight;
+			Lbl_AesOptions.Text = "AES Options [hide]";
 		}
 	}
 
 	private void PrimaryWindow_ResizeEnd(object sender, EventArgs e)
 	{
-		if (Pnl_AesWrapper.Location.Y + AesWrapperHeight > Btn_Run.Location.Y)
+		if (Pnl_AesWrapper.Location.Y + _aesWrapperHeight > Btn_Run.Location.Y)
 		{
 			Pnl_AesWrapper.Height = Btn_Run.Location.Y - Pnl_AesWrapper.Location.Y - 5;
 		}
-		else Pnl_AesWrapper.Height = AesWrapperHeight;
+		else Pnl_AesWrapper.Height = _aesWrapperHeight;
 	}
 
 	private void DrpDn_Mode_Changed(object sender, EventArgs e)
@@ -252,6 +251,13 @@ public partial class PrimaryWindow : Form
 	private void Lbl_Errors_DoubleClick(object sender, EventArgs e)
 	{
 		Lbl_Errors.Text = "";
+	}
+
+	private void SwitchMode()
+	{
+		bool b = Rdo_Encode.Checked;
+		Rdo_Encode.Checked = !b;
+		Rdo_Decode.Checked = b;
 	}
 
 	#endregion

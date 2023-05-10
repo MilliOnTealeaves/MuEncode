@@ -27,7 +27,7 @@ class Encoder : IDisposable
 	/// <summary>
 	/// Adds data to the <c>MorseT</c> and <c>MorseF</c> dictionaries
 	/// </summary>
-	/// 
+	///
 	private static void InitializeMorse()
 	{
 		// Fill Morse dictionary

@@ -558,7 +558,7 @@
 			this.Lbl_AesOptions.Name = "Lbl_AesOptions";
 			this.Lbl_AesOptions.Size = new System.Drawing.Size(187, 20);
 			this.Lbl_AesOptions.TabIndex = 0;
-			this.Lbl_AesOptions.Text = "AES Options";
+			this.Lbl_AesOptions.Text = "AES Options [hide]";
 			this.Lbl_AesOptions.Click += new System.EventHandler(this.Lbl_AesOptions_Click);
 			// 
 			// DrpDn_Mode
@@ -631,6 +631,7 @@
 			this.Controls.Add(this.Pnl_Footer);
 			this.HelpButton = true;
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+			this.KeyPreview = true;
 			this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.MinimumSize = new System.Drawing.Size(450, 398);
 			this.Name = "PrimaryWindow";
