@@ -5,6 +5,8 @@ class Encoder : IDisposable
 {
 	private ErrorStream _errorStream;
 
+	private static bool _loaded;
+
 	/// <summary>
 	/// Dictionary with alphanumeric characters mapped to morse code
 	/// </summary>
