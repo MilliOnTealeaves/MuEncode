@@ -38,6 +38,7 @@ public partial class PrimaryWindow : Form
 		bool encode = Rdo_Encode.Checked;
 		string result = TxtBx_Input.Text;
 		int mode = DrpDn_Mode.SelectedIndex;
+		_err.Clear();
 		using (Encoder enc = new(_err))
 		{
 			if (encode)
@@ -250,7 +251,7 @@ public partial class PrimaryWindow : Form
 
 	private void Lbl_Errors_DoubleClick(object sender, EventArgs e)
 	{
-		Lbl_Errors.Text = "";
+		_err.Clear();
 	}
 
 	private void SwitchMode()

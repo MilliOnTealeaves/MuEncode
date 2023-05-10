@@ -52,6 +52,11 @@ public class ErrorStream
 		if (Beep) SystemSounds.Beep.Play();
 	}
 
+	public void Clear()
+	{
+		_stream.Text = "";
+	}
+
 	public override string ToString()
 	{
 		string result = "";
