@@ -9,87 +9,110 @@
 <body>
     <h1 class="inline-title" id="title">μEncode</h1><hr />
     <div class="body-wrapper">
-        <h1 class="inline-title"> Help Page</h1> <hr />
-    <h1 data-heading="Basics">Basics</h1>
-    <h2 data-heading="Encoding or decoding a message">Encoding or decoding a message</h2>
-    <h3 data-heading="1. Enter your message:">1. Enter your message:</h3>
-    <ul>
-        <li>Type your message into the textbox under ‘<strong>Input</strong>’</li>
-        <li>Click the ‘<strong>Paste</strong>’ button</li>
-        <li>Open a file—works best with text files</li>
-    </ul>
-    <h3 data-heading="2. Select mode (encode/decode) based on your intended action">2. Select mode (encode/decode) based on your intended action</h3>
-    <ul>
-        <li>To encode a message, select ‘<strong>Encode</strong>’</li>
-        <li>To decode a message, select ‘<strong>Decode</strong>’</li>
-    </ul>
-    <h3 data-heading="3. Choose a type of encoding">3. Choose a type of encoding</h3>
-    <p><em>For more information, see ‘Encoding Types’ under ‘Detailed Information’</em></p>
-    <h3 data-heading="4. Select any options you want enabled">4. Select any options you want enabled</h3>
-    <p><em>For more information, see ‘Options’ under ‘Detailed Information’</em> </p>
-    <h3 data-heading="5. Click ‘**Run**’ to encode/encrypt your message">5. Click ‘<strong>Run</strong>’ to encode/encrypt your message</h3>
-    <ul>
-        <li>If you used AES encryption, make sure to save the key and initialisation vector if you elected to generate a new pair.</li>
-        <li>When done, you can copy the output to your clipboard via the ‘<strong>Copy</strong>’ button or by having ‘<strong>Copy result when done</strong>’ enabled in the Options panel, or save it to a file (not yet available)</li>
-        <li>Encoding/decoding a new</li>
-    </ul>
-    <h3 data-heading="6. Save your output!">6. Save your output!</h3>
-    <ul>
-        <li>Whether you just want to copy it or save it to a file, make sure you get your output stashed!</li>
-    </ul>
-    <h1 data-heading="Detailed Information">Detailed Information</h1>
-    <h2 data-heading="Encoding Types">Encoding Types</h2>
-    <h3 data-heading="Morse Code">Morse Code</h3>
-    <p>Usage information:</p>
-    <ul>
-        <li>A space marks the end of a character</li>
-        <li>Forward slash (<code>/</code>) is used for space <em>(Note: A space is needed on each side of the slash)</em></li>
-        <li>Accepts both uppercase and lowercase input, but does not preserve case (decoding will always result in lowercase text)</li>
-    </ul>
-    <p>
-        Example:<br>
-        <code>mu is a letter</code> encodes to <code>-- ..- / .. ... / .- / .-.. . - - . .-.</code>
-    </p>
-    <p>Currently supported characters:</p>
-    <ul>
-        <li>English Letters A-Z</li>
-        <li>Numbers 0-9</li>
-        <li>
-            Additional characters:<br>
-            <code>. , ? ' ! / ( ) &amp; : ; = + - _ " $ @</code>
-        </li>
-    </ul>
-    <h3 data-heading="Random Shift">Random Shift</h3>
-    <ul>
-        <li>Translates message to morse code, with every character shifted ‘forward’ by a random number</li>
-        <li>E.g., with a shift of 3, <code>a</code> becomes <code>d</code>, <code>p</code> becomes <code>s</code>, etc.</li>
-        <li>Also applies to characters</li>
-        <li>Proprietary character order makes this harder to decode by hand</li>
-    </ul>
-    <h3 data-heading="Repeated Random Shift">Repeated Random Shift</h3>
-    <ul>
-        <li>Iteratively uses <strong>Random Shift</strong> to encode a message</li>
-        <li>Decoding difficulty to decode is similar to <strong>Random Shift</strong> but takes longer</li>
-    </ul>
-    <h3 data-heading="AES Encryption">AES Encryption</h3>
-    <ul>
-        <li>Uses the AES standard and is interoperable with other AES software</li>
-        <li>Most secure option available in μEncode</li>
-        <li>Uses—or generates—a key and initialisation vector to encode any text</li>
-        <li>Symmetric encryption—key and IV needed on both sides of communication line</li>
-    </ul>
-    <p>Usage information:</p>
-    <ul>
-        <li>μEncode uses the key and IV currently entered in the textboxes that appear when AES is selected</li>
-        <li>If the key or IV field are left blank, or either of the two is invalid, a new pair is generated</li>
-        <li>Supports all UTF-8 characters</li>
-    </ul>
-    <h2 data-heading="Options">Options</h2>
-    <h3 data-heading="‘Copy result when done’">‘Copy result when done’</h3>
-    <p>Enabling ‘<strong>Copy result when done</strong>’ will copy the result of encoding/decoding to the clipboard after you click ‘<strong>Run</strong>’</p>
-    <h3 data-heading="‘Switch mode when done’">‘Switch mode when done’</h3>
-    <p>Enabling ‘<strong>Switch mode when done</strong>’ will make the mode switch from encoding to decoding, or vice versa, after input is processed.</p>
-    <p>This is useful in situations where one needs to encode messages to send and decode received messages in short succession</p>
+        <h1 data-heading="Basics">Basics</h1>
+        <h2 data-heading="Encoding or decoding a message">Encoding or decoding a message</h2>
+        <h3 data-heading="1. Enter your message:">1. Enter your message:</h3>
+        <ul>
+            <li>Type your message into the textbox under ‘<strong>Input</strong>’</li>
+            <li>Click the ‘<strong>Paste</strong>’ button</li>
+            <li>Open a file—works best with text files</li>
+        </ul>
+        <h3 data-heading="2. Select mode (encode/decode) based on your intended action">2. Select mode (encode/decode) based on your intended action</h3>
+        <ul>
+            <li>To encode a message, select ‘<strong>Encode</strong>’</li>
+            <li>To decode a message, select ‘<strong>Decode</strong>’</li>
+        </ul>
+        <h3 data-heading="3. Choose a type of encoding">3. Choose a type of encoding</h3>
+        <p><em>For more information, see ‘Encoding Types’ under ‘Detailed Information’</em></p>
+        <h3 data-heading="4. Select any options you want enabled">4. Select any options you want enabled</h3>
+        <p><em>For more information, see ‘Options’ under ‘Detailed Information’</em> </p>
+        <h3 data-heading="5. Click ‘**Run**’ to encode/encrypt your message">5. Click ‘<strong>Run</strong>’ to encode/encrypt your message</h3>
+        <ul>
+            <li>If you used AES encryption, make sure to save the key and initialisation vector if you elected to generate a new pair.</li>
+            <li>When done, you can copy the output to your clipboard via the ‘<strong>Copy</strong>’ button or by having ‘<strong>Copy result when done</strong>’ enabled in the Options panel, or save it to a file (not yet available)</li>
+            <li>Encoding/decoding a new</li>
+        </ul>
+        <h3 data-heading="6. Save your output!">6. Save your output!</h3>
+        <ul>
+            <li>Whether you just want to copy it or save it to a file, make sure you get your output stashed!</li>
+        </ul>
+        <h1 data-heading="Detailed Information">Detailed Information</h1>
+        <h2 data-heading="Encoding Types">Encoding Types</h2>
+        <h3 data-heading="Morse Code">Morse Code</h3>
+        <p>Usage information:</p>
+        <ul>
+            <li>A space marks the end of a character</li>
+            <li>Forward slash (<code>/</code>) is used for space <em>(Note: A space is needed on each side of the slash)</em></li>
+            <li>Accepts both uppercase and lowercase input, but does not preserve case (decoding will always result in lowercase text)</li>
+        </ul>
+        <p>
+            Example:<br>
+            <code>mu is a letter</code> encodes to <code>-- ..- / .. ... / .- / .-.. . - - . .-.</code>
+        </p>
+        <p>Currently supported characters:</p>
+        <ul>
+            <li>English Letters A-Z</li>
+            <li>Numbers 0-9</li>
+            <li>
+                Additional characters:<br>
+                <code>. , ? ' ! / ( ) &amp; : ; = + - _ " $ @</code>
+            </li>
+        </ul>
+        <h3 data-heading="Random Shift">Random Shift</h3>
+        <ul>
+            <li>Translates message to morse code, with every character shifted ‘forward’ by a random number</li>
+            <li>E.g., with a shift of 3, <code>a</code> becomes <code>d</code>, <code>p</code> becomes <code>s</code>, etc.</li>
+            <li>Also applies to characters</li>
+            <li>Proprietary character order makes this harder to decode by hand</li>
+        </ul>
+        <h3 data-heading="Repeated Random Shift">Repeated Random Shift</h3>
+        <ul>
+            <li>Iteratively uses <strong>Random Shift</strong> to encode a message</li>
+            <li>Decoding difficulty to decode is similar to <strong>Random Shift</strong> but takes longer</li>
+        </ul>
+        <h3 data-heading="AES Encryption">AES Encryption</h3>
+        <ul>
+            <li>Uses the AES standard and is interoperable with other AES software</li>
+            <li>Most secure option available in μEncode</li>
+            <li>Uses—or generates—a key and initialisation vector to encode any text</li>
+            <li>Symmetric encryption—key and IV needed on both sides of communication line</li>
+        </ul>
+        <p>Usage information:</p>
+        <ul>
+            <li>μEncode uses the key and IV currently entered in the textboxes that appear when AES is selected</li>
+            <li>If the key or IV field are left blank, or either of the two is invalid, a new pair is generated</li>
+            <li>Supports all UTF-8 characters</li>
+        </ul>
+        <h2 data-heading="Options">Options</h2>
+        <h3 data-heading="‘Copy result when done’">‘Copy result when done’</h3>
+        <p>Enabling ‘<strong>Copy result when done</strong>’ will copy the result of encoding/decoding to the clipboard after you click ‘<strong>Run</strong>’</p>
+        <h3 data-heading="‘Switch mode when done’">‘Switch mode when done’</h3>
+        <p>Enabling ‘<strong>Switch mode when done</strong>’ will make the mode switch from encoding to decoding, or vice versa, after input is processed.</p>
+        <p>This is useful in situations where one needs to encode messages to send and decode received messages in short succession</p>
+        <h1 data-heading="Keyboard Shortcuts">Keyboard Shortcuts</h1>
+        <h2 data-heading="List of Shortcuts">List of Shortcuts</h2>
+        <h3 data-heading="Input and Output">Input and Output</h3>
+        <ul>
+            <li><code>Ctrl+O</code>&nbsp;to open a file</li>
+            <li><code>Ctrl+S</code>&nbsp;to save the output as a file</li>
+            <li><code>Ctrl+Shift+V</code>&nbsp;to paste the input from your clipboard</li>
+            <li><code>Ctrl+Shift+C</code>&nbsp;to copy the output</li>
+            <li><code>Ctrl+I</code>&nbsp;to focus on the input field</li>
+            <li><code>Ctrl+Tab</code>&nbsp;to clear both input and output</li>
+        </ul>
+        <h3 data-heading="Encoding and Decoding">Encoding and Decoding</h3>
+        <ul>
+            <li><code>Ctrl+R</code>&nbsp;or&nbsp;<code>Ctrl+Enter</code>&nbsp;to run the encoder</li>
+            <li><code>Ctrl+M</code>&nbsp;to switch between encoding and decoding modes</li>
+            <li><code>Ctrl+E</code>&nbsp;to select ‘Encode’</li>
+            <li><code>Ctrl+D</code>&nbsp;to select ‘Decode’</li>
+            <li><code>Ctrl+1, 2, 3, or 4</code>&nbsp;to select different encodings</li>
+        </ul>
+        <h3 data-heading="Other">Other</h3>
+        <ul>
+            <li><code>Ctrl+H</code>&nbsp;or&nbsp;<code>F1</code>&nbsp;to open the help page</li>
+        </ul>
+
     </div>
 </body>
 </html>

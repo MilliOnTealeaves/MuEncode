@@ -22,7 +22,7 @@ DefaultDirName={autopf}\{#MyAppName}
 DisableProgramGroupPage=yes
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
-OutputBaseFilename=MuEncodeSetup_v2.1
+OutputBaseFilename=MuEncodeSetup_v{#myAppVersion}
 SetupIconFile="C:\Users\emila\OneDrive\Pictures\Saved Pictures\greenMu.ico"
 Compression=lzma
 SolidCompression=yes
