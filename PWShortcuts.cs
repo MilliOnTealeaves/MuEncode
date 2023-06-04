@@ -59,8 +59,8 @@ partial class PrimaryWindow : Form
 
 			// clear input and output
 			case (Keys.Control | Keys.Tab):
-				Btn_ClearInput_Click("CTRL+Escape", new());
-				Btn_ClearOutput_Click("CTRL+Escape", new());
+				Btn_ClearInput_Click("CTRL+Tab", new());
+				Btn_ClearOutput_Click("CTRL+Tab", new());
 				return true;
 
 			// select encoding type
