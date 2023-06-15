@@ -16,6 +16,7 @@ public partial class PrimaryWindow : Form
 		_err = new(Lbl_Errors, false);
 		_err.Write("Error and notice stream: double-click to clear. For help, press the logo");
 		_aesWrapperHeight = Pnl_AesWrapper.Height;
+		_aesTextHidden = false;
 
 		_helpUrl = "\\Help\\HelpPage.html";
 		_exeUrl = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -192,35 +193,195 @@ public partial class PrimaryWindow : Form
 
 	#endregion
 
+	#region Input Drag-and-Drop Methods
+
+	private void Input_DragEnter(object sender, DragEventArgs e)
+	{
+		TxtBx_Input.BackColor = Color.GhostWhite;
+		if (e.Data != null && (e.Data.GetDataPresent(DataFormats.Text) || e.Data.GetDataPresent(DataFormats.FileDrop)))
+			e.Effect = DragDropEffects.Copy;
+	}
+
+	private void Input_DragLeave(object sender, EventArgs e)
+	{
+		TxtBx_Input.BackColor = Color.White;
+	}
+
+	private void Input_DragDrop(object sender, DragEventArgs e)
+	{
+		TxtBx_Input.BackColor = Color.White;
+
+		IDataObject droppedData = e.Data ?? new DataObject(DataFormats.Text, "");
+
+		if (droppedData.GetDataPresent(DataFormats.FileDrop))
+		{
+			TxtBx_Input.Text = "";
+			string[] filePaths = (string[])droppedData.GetData(DataFormats.FileDrop);
+			foreach (string path in filePaths)
+			{
+				if (File.Exists(path)) TxtBx_Input.Text += File.ReadAllText(path) + "\n";
+			}
+			_err.Write("File dropped");
+		}
+		else if (droppedData.GetDataPresent(DataFormats.Text))
+		{
+			TxtBx_Input.Text = droppedData.GetData(DataFormats.Text).ToString();
+			_err.Write("Text dropped");
+		}
+	}
+
+	#endregion
+
+	#region AES Drag-and-Drop Methods
+
+	private void Aes_DragEnter(object sender, DragEventArgs e)
+	{
+		Pnl_AesWrapper.BackColor = Color.GhostWhite;
+		if (e.Data != null && (e.Data.GetDataPresent(DataFormats.Text) || e.Data.GetDataPresent(DataFormats.FileDrop)))
+			e.Effect = DragDropEffects.Copy;
+	}
+
+	private void Aes_DragLeave(object sender, EventArgs e)
+	{
+		Pnl_AesWrapper.BackColor = Color.White;
+	}
+	private void Aes_DragDrop(object sender, DragEventArgs e)
+	{
+		Pnl_AesWrapper.BackColor = Color.White;
+
+		IDataObject droppedData = e.Data ?? new DataObject(DataFormats.Text, "");
+		string aesData = "";
+
+		if (droppedData.GetDataPresent(DataFormats.FileDrop))
+		{
+			Pnl_AesWrapper.Text = "";
+			string[] filePaths = (string[])droppedData.GetData(DataFormats.FileDrop);
+			foreach (string path in filePaths)
+			{
+				if (File.Exists(path)) aesData += File.ReadAllText(path) + "\n";
+			}
+			_err.Write("Aes file data dropped");
+		}
+		else if (droppedData.GetDataPresent(DataFormats.Text))
+		{
+			aesData += droppedData.GetData(DataFormats.Text).ToString();
+			_err.Write("Aes text data dropped");
+		}
+
+		string[] parsedData = ParseAesData(aesData);
+		TxtBx_AesKey.Text = parsedData[0];
+		TxtBx_AesIV.Text = parsedData[1];
+	}
+
+	#endregion
+
 	#region AES Panel Resize Methods
 
 	private int _aesWrapperHeight;
-	private void Lbl_AesOptions_Click(object sender, EventArgs e)
+	private bool _aesTextHidden;
+
+	private void Btn_AesShowHide_Click(object sender, EventArgs e)
 	{
-		if (Pnl_AesWrapper.Height > Pnl_AesWrapper.Font.Height + 2)
+		if (!_aesTextHidden)
 		{
-			Pnl_AesWrapper.Height = Pnl_AesWrapper.Font.Height + 2;
-			Lbl_AesOptions.Text = "AES Options [show]";
+			Pnl_AesWrapper.Height = Pnl_AesWrapper.Font.Height + Pnl_AesFileHandling.Height + 2;
+			_aesTextHidden = true;
+			Btn_AesShowHide.Text = "Show Text";
 		}
 		else
 		{
 			Pnl_AesWrapper.Height = _aesWrapperHeight;
-			Lbl_AesOptions.Text = "AES Options [hide]";
+			_aesTextHidden = false;
+			Btn_AesShowHide.Text = "Hide Text";
 		}
+		// makes sure that textboxes display properly if window is short
+		PrimaryWindow_ResizeEnd("Btn_AesShowHide", e);
 	}
 
 	private void PrimaryWindow_ResizeEnd(object sender, EventArgs e)
 	{
-		if (Pnl_AesWrapper.Location.Y + _aesWrapperHeight > Btn_Run.Location.Y)
+		if (!_aesTextHidden)
 		{
-			Pnl_AesWrapper.Height = Btn_Run.Location.Y - Pnl_AesWrapper.Location.Y - 5;
+			if (Pnl_AesWrapper.Location.Y + _aesWrapperHeight > Btn_Run.Location.Y)
+			{
+				Pnl_AesWrapper.Height = Btn_Run.Location.Y - Pnl_AesWrapper.Location.Y - 5;
+				Pnl_AesFileHandling.Visible = false;
+			}
+			else
+			{
+				Pnl_AesWrapper.Height = _aesWrapperHeight;
+				Pnl_AesFileHandling.Visible = true;
+			}
 		}
-		else Pnl_AesWrapper.Height = _aesWrapperHeight;
+		if (sender is string a && a == "Btn_AesShowHide")
+		{
+			_err.Write("File options hidden due to small window size");
+		}
 	}
 
 	private void DrpDn_Mode_Changed(object sender, EventArgs e)
 	{
 		if (DrpDn_Mode.SelectedIndex == 3) Pnl_AesWrapper.Show(); else Pnl_AesWrapper.Hide();
+	}
+
+	#endregion
+
+	#region Aes File Handling
+
+	private void Btn_AesOpen_Click(object sender, EventArgs e)
+	{
+		OpenFile_Aes.ShowDialog();
+	}
+
+	private void Btn_AesSave_Click(object sender, EventArgs e)
+	{
+		if (!string.IsNullOrWhiteSpace(TxtBx_AesKey.Text) && !string.IsNullOrEmpty(TxtBx_AesIV.Text))
+		{
+			SaveFile_Aes.ShowDialog();
+		}
+		else
+		{
+			_err.Write("AES pair incomplete");
+		}
+	}
+	private void OpenFile_Aes_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+	{
+		string rawData;
+		using (Stream fs = OpenFile_Aes.OpenFile())
+		{
+			using (StreamReader sr = new(fs))
+			{
+				rawData = sr.ReadToEnd();
+				if (!string.IsNullOrEmpty(rawData))
+				{
+					sr.Close();
+					_err.Write("File loaded successfully");
+				}
+				else
+					_err.Write("File contents null or empty");
+			}
+		}
+		OpenFile_Aes.Dispose();
+
+		string[] parsedData = ParseAesData(rawData);
+		TxtBx_AesKey.Text = parsedData[0];
+		TxtBx_AesIV.Text = parsedData[1];
+	}
+
+	private void SaveFile_Aes_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+	{
+		if (!string.IsNullOrEmpty(TxtBx_AesKey.Text) && !string.IsNullOrEmpty(TxtBx_AesIV.Text))
+		{
+			using (Stream fs = SaveFile_Aes.OpenFile())
+			{
+				using (StreamWriter sr = new(fs))
+				{
+					sr.Write(CombineAesData(TxtBx_AesKey.Text, TxtBx_AesIV.Text));
+					sr.Close();
+				}
+			}
+			SaveFile_Aes.Dispose();
+		}
 	}
 
 	#endregion
@@ -261,5 +422,25 @@ public partial class PrimaryWindow : Form
 		Rdo_Decode.Checked = b;
 	}
 
+	private static string[] ParseAesData(string rawData)
+	{
+		int index = rawData.IndexOf("|||");
+		if (index != -1)
+		{
+			string key = rawData[..index];
+			string iv = rawData[(index + 3)..];
+			return new string[2] { key, iv };
+		}
+		else return new string[2] { "", "" };
+	}
+
+	private static string CombineAesData(string keyString, string ivString)
+	{
+		return $"{keyString}|||{ivString}";
+	}
+
 	#endregion
+
+
+
 }
