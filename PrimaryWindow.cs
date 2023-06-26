@@ -306,16 +306,17 @@ public partial class PrimaryWindow : Form
 			{
 				Pnl_AesWrapper.Height = Btn_Run.Location.Y - Pnl_AesWrapper.Location.Y - 5;
 				Pnl_AesFileHandling.Visible = false;
+
+				if (sender is string a && a == "Btn_AesShowHide")
+				{
+					_err.Write("File options hidden due to small window size");
+				}
 			}
 			else
 			{
 				Pnl_AesWrapper.Height = _aesWrapperHeight;
 				Pnl_AesFileHandling.Visible = true;
 			}
-		}
-		if (sender is string a && a == "Btn_AesShowHide")
-		{
-			_err.Write("File options hidden due to small window size");
 		}
 	}
 

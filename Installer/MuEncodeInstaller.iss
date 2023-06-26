@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "MuEncode"
-#define MyAppVersion "2.2"
+#define MyAppVersion "2.3"
 #define MyAppPublisher "MilliOnTealeaves"
 #define MyAppURL "https://github.com/MilliOnTealeaves/MuEncode/"
 #define MyAppExeName "MuEncode.exe"
